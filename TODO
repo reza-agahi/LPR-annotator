@@ -1,0 +1,6 @@
+use full list of RESTful api capability with using of post, get, put, delete.
+have a look at http://www.restapitutorial.com/lessons/httpmethods.html
+have a changelogger!
+have a readme.md
+have a users middleware to know about requesting user! use this:
+https://www.terlici.com/2014/08/25/best-practices-express-structure.html
