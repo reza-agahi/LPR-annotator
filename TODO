@@ -4,3 +4,5 @@ have a changelogger!
 have a readme.md
 have a users middleware to know about requesting user! use this:
 https://www.terlici.com/2014/08/25/best-practices-express-structure.html
+use a task runner like gulp if there is some transpilation
+use webpack or similar to pack client side codes
