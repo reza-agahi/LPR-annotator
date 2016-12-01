@@ -21,8 +21,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/npm/npm.git",
-    "//": "url of repository should be specified"
+    "url": "https://github.com/reza-agahi/LPR-annotator.git"
   },
   "scripts": {
     "start": "node ./bin/www",
