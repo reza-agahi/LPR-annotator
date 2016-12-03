@@ -8,3 +8,12 @@ use a task runner like gulp if there is some transpilation
 use webpack or similar to pack client side codes
 include db initialization in app.js
 what is a promise in js?
+user authentication and saving the name of annotator and date of annotation in database
+having a header showing the name of authenticated user and maybe some other capabilities and sign out
+change save button to reset button
+remove remove button! add a checkbox for ignore of that image
+consider locking when multi users work on annotation
+toggler selector for annotated and non-annotated images
+Difficulty and Plate-type should be replace with radio buttons to change with just one click
+add project management
+
