@@ -29,4 +29,13 @@ passport.deserializeUser(function(id, done) {
   });
 });
 
+passport.isLoggedIn = function(req, res, next) {
+  var passportSession = req.session.passport == undefined ? [] : req.session.passport;
+    if ('user' in passportSession) {
+      next();
+    } else {
+      res.redirect('/login');
+    }
+};
+
 module.exports = passport;

@@ -6,7 +6,7 @@ var knex = require('knex')({
   connection: {
     host : 'localhost',
     user : 'root',
-    password : '123456',
+    password : '1421371',
     database : 'LPR-annotator'
   }
 });
