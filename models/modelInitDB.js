@@ -1,9 +1,12 @@
+var bcrypt = require('bcrypt');
+const saltRounds = 10;
+
 var knex = require('knex')({
   client: 'mysql',
   connection: {
     host : 'localhost',
     user : 'root',
-    password : '1421371',
+    password : '123456',
     database : 'LPR-annotator'
   }
 });
@@ -30,6 +33,14 @@ knex.schema.createTableIfNotExists('difficulties', function(table) {
   table.integer('y').unsigned();
   table.integer('w').unsigned();
   table.integer('h').unsigned();
+})
+.createTableIfNotExists('users', function(table) {
+  table.increments('id').primary();
+  table.string('username', 20);
+  table.string('password', 256);
+})
+.then(function() {
+  return knex.insert({username: 'reza.agahi', password: bcrypt.hashSync('123456', saltRounds)}).into('users');
 })
 .catch(function(e) {
   console.error(e);

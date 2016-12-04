@@ -6,9 +6,11 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
 
-var index = require('./routes/index');
-var users = require('./routes/users');
-var login = require('./routes/login');
+// import routes
+var index = require('./routes/routeIndex');
+var login = require('./routes/routeLogin');
+var profile = require('./routes/routeProfile');
+var logout = require('./routes/routeLogout');
 
 var app = express();
 
@@ -22,21 +24,19 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 app.use(require('node-compass')({mode: 'expanded'}));
+app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 // TODO: replace input object with correct one to correctly addressing sass and css dirs
-app.use(express.static(path.join(__dirname, 'public')));
+// app.use(express.static(path.join(__dirname, 'public')));
 
-// app.use('/', index);
-app.use('/users', users);
-app.use('/logins', login);
+// index
+app.use('/', index);
 
-// authentication handling
-// app.post('/login', passport.authenticate('local'), function(req, res) {
-//   console.log(req.body.username);
-// });
-
-app.post('/login', function(req, res) {
-  console.log(req.body);
-});
+// authentication
+app.use(passport.initialize());
+app.use(passport.session());
+app.use('/login', login);
+app.use('/profile', profile);
+app.use('/logout', logout);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
