@@ -1,0 +1,10 @@
+@font-face {
+  font-family: yekan;
+  src: url("../assets/fonts/Yekan.ttf");
+}
+
+// for compatibility with w3.css namings, we prefere to choose a w3 prefix
+.w3-yekan,
+.w3-yekan * {
+  font-family: yekan;
+}

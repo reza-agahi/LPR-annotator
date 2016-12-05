@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>Faraadid LPR tool</title>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
+    <link rel="stylesheet" href="./css/index.css">
+    <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.1.1/jquery.min.js"></script>
+    <script src="fabric.js"></script>
+
+    <!-- <script type="text/javascript" src="../node_modules/angular/angular.min.js"></script> -->
+  </head>
+  <body ng-app="app" ng-controller="appController" ng-Keydown="keyPress($event)">
+    <header>
+      <ng-include src="'./html/header.html'" ></ng-include>
+    </header>
+
+    <!-- main section of application -->
+    <section style="position: relative;" class="w3-section">
+
+      <div style="width: 50%; margin: auto;">
+        <div class="w3-btn-group">
+          <button style="width:50%" class="w3-btn w3-khaki" ng-click="addRect()" name="add-rect">اضافه کن</button>
+          <button style="width:50%" class="w3-btn w3-teal" ng-click="removeRect()" name="remove-rect">حذف کن</button>
+        </div>
+        <div style="margin-top: 2px; position: relative;" class="plateBox w3-row w3-center">
+          <canvas id="canvas-background" width="651px" ></canvas>
+          <canvas ng-click="rightClick($event)" style="position: absolute; left: 0; top: 0; z-index: 1;" id="canvas" width="651px"></canvas>
+        </div>
+      </div>
+
+      <plate-t1></plate-t1>
+
+      <radio-difficulty></radio-difficulty>
+      <radio-plate-type></radio-plate-type>
+      <checkbox-ignore></checkbox-ignore>
+
+      <div class="arrow-keys">
+        <i ng-click="previous();" id="previous" class="w3-hover-text-red w3-text-orange fa fa-arrow-circle-left"></i>
+        <i ng-click="next();" id="next" class="w3-hover-text-red w3-text-orange fa fa-arrow-circle-right"></i>
+      </div>
+
+
+    </section>
+
+    <footer>
+      <ng-include src="'./html/footer.html'" ></ng-include>
+    </footer>
+
+    <!-- modules -->
+    <script type="text/javascript" src="./js/app.js"></script>
+
+    <!-- controllers -->
+    <script type="text/javascript" src="./js/controllers/appController.js"></script>
+
+    <!-- services -->
+
+    <!-- directives -->
+    <script type="text/javascript" src="./js/directives/plateT1.js"></script>
+    <script type="text/javascript" src="./js/directives/radioDifficulty.js"></script>
+    <script type="text/javascript" src="./js/directives/radioPlateType.js"></script>
+    <script type="text/javascript" src="./js/directives/checkboxIgnore.js"></script>
+
+  </body>
+</html>
