@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var passport = require('../middlewares/middleAuth');
+var passport = require('../middlewares/authentication');
 
 router.get('/', passport.isLoggedIn, function(req, res){
     res.render('profile', { user: req.user });

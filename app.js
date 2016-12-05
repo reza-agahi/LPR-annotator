@@ -5,12 +5,11 @@ var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var passport = require('passport');
+var expressSession = require('express-session');
+var nodeCompass = require('node-compass');
 
 // import routes
-var index = require('./routes/routeIndex');
-var login = require('./routes/routeLogin');
-var profile = require('./routes/routeProfile');
-var logout = require('./routes/routeLogout');
+var index = require('./routes/index');
 
 var app = express();
 
@@ -23,21 +22,12 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(require('node-compass')({mode: 'expanded'}));
-app.use(require('express-session')({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
+app.use(nodeCompass({mode: 'expanded'}));
 // TODO: replace input object with correct one to correctly addressing sass and css dirs
+app.use(expressSession({ secret: 'keyboard cat', resave: false, saveUninitialized: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
-// index
 app.use('/', index);
-
-// authentication
-app.use(passport.initialize());
-app.use(passport.session());
-app.use('/login', login);
-app.use('/profile', profile);
-app.use('/logout', logout);
-
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

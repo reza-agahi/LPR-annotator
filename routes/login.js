@@ -1,7 +1,7 @@
 var express = require('express');
 var router = express.Router();
 
-var passport = require('../middlewares/middleAuth');
+var passport = require('../middlewares/authentication');
 
 // handles authentication with passport
 router.post('/',

@@ -24,11 +24,10 @@
     "url": "https://github.com/reza-agahi/LPR-annotator.git"
   },
   "scripts": {
-    "start": "node ./bin/www",
-    "//": "start script should be specified"
+    "start": "node ./bin/www | gulp sass:watch",
+    "test": "./node_modules/.bin/mocha --reporter spec"
   },
   "dependencies": {
-    "angular": "^1.5.9",
     "bcrypt": "^0.8.7",
     "body-parser": "~1.15.2",
     "cookie-parser": "~1.4.3",
@@ -39,10 +38,18 @@
     "knex": "^0.12.6",
     "morgan": "~1.7.0",
     "mysql": "^2.12.0",
-    "node-compass": "0.2.3",
     "nodemon": "^1.11.0",
     "passport": "^0.3.2",
     "passport-local": "^1.0.0",
-    "serve-favicon": "~2.3.0"
+    "serve-favicon": "~2.3.0",
+  },
+  "devDependencies": {
+    "angular": "^1.5.9",
+    "chai": "^3.5.0",
+    "gulp": "^3.9.1",
+    "gulp-sass": "^2.3.2",
+    "mocha": "^3.2.0",
+    "request": "^2.79.0",
+    "zombie": "^5.0.5"
   }
 }
