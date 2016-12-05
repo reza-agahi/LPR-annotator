@@ -16,25 +16,26 @@
   </head>
   <body ng-app="app" ng-controller="appController" ng-Keydown="keyPress($event)">
     <header>
-      <ng-include src="'./html/header.html'" ></ng-include>
+
     </header>
+    <nav>
+      <ng-include src="'./html/nav.html'" ></ng-include>
+    </nav>
 
     <!-- main section of application -->
     <section style="position: relative;" class="w3-section">
 
       <div style="width: 50%; margin: auto;">
         <div class="w3-btn-group">
-          <button style="width:50%" class="w3-btn w3-khaki" ng-click="addRect()" name="add-rect">اضافه کن</button>
           <button style="width:50%" class="w3-btn w3-teal" ng-click="removeRect()" name="remove-rect">حذف کن</button>
         </div>
         <div style="margin-top: 2px; position: relative;" class="plateBox w3-row w3-center">
           <canvas id="canvas-background" width="651px" ></canvas>
-          <canvas ng-click="rightClick($event)" style="position: absolute; left: 0; top: 0; z-index: 1;" id="canvas" width="651px"></canvas>
+          <canvas style="position: absolute; left: 0; top: 0; z-index: 1;" id="canvas" width="651px"></canvas>
         </div>
       </div>
 
       <plate-t1></plate-t1>
-
       <radio-difficulty></radio-difficulty>
       <radio-plate-type></radio-plate-type>
       <checkbox-ignore></checkbox-ignore>
