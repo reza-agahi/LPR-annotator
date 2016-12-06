@@ -6,6 +6,7 @@
     <title>Faraadid LPR tool</title>
 
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
     <link rel="stylesheet" href="http://www.w3schools.com/lib/w3.css">
     <link rel="stylesheet" href="./css/index.css">
     <script type="text/javascript" src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.8/angular.min.js"></script>
@@ -25,10 +26,14 @@
     <!-- main section of application -->
     <section style="position: relative;" class="w3-section">
 
-      <div style="width: 50%; margin: auto;">
-        <div class="w3-btn-group">
-          <button style="width:50%" class="w3-btn w3-teal" ng-click="removeRect()" name="remove-rect">حذف کن</button>
-        </div>
+      <div style="direction: rtl; width: 50%; margin: auto;">
+        <p>
+          <span><i style="position: relative; top: 8px;" class="w3-round-xlarge w3-green material-icons">add</i></span>
+          <span>ابتدا کلید a را فشرده و سپس مستطیل را ترسیم نمایید.</span>
+          <br>
+          <span><i style="position: relative; top: 8px;" class="w3-round-xlarge w3-red material-icons">remove</i></span>
+          <span>روی مستطیل مورد نظر کلیک کنید و سپس با دکمه d آن را حذف نمایید.</span>
+        </p>
         <div style="margin-top: 2px; position: relative;" class="plateBox w3-row w3-center">
           <canvas id="canvas-background" width="651px" ></canvas>
           <canvas style="position: absolute; left: 0; top: 0; z-index: 1;" id="canvas" width="651px"></canvas>
