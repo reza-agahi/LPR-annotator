@@ -25,10 +25,12 @@ knex.schema.createTableIfNotExists('difficulties', function(table) {
   table.integer('typeId').unsigned().references('types.id');
   table.string('imageName', 50);
   table.boolean('isChecked');
+  table.boolean('isAnnotatable');
 })
 .createTableIfNotExists('boxes', function(table) {
   table.increments('id').primary();
   table.integer('plateId').unsigned().references('plates.id');
+  table.string('characters', 3);
   table.integer('x').unsigned();
   table.integer('y').unsigned();
   table.integer('w').unsigned();

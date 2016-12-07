@@ -1,16 +1,16 @@
 <div class="plate-t1 w3-section w3-row w3-center">
   <div class="plate-t1-background">
     <div class="plate-t1-left-panel">
-      <input type="number" name="quantity" min="0" max="9">
-      <input type="number" name="quantity" min="0" max="9">
-      <input type="text" maxlength="3">
-      <input type="number" name="quantity" min="0" max="9">
-      <input type="number" name="quantity" min="0" max="9">
-      <input type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.unOrdered[0]" type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.symbols[1]" type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.symbols[2]" type="text" maxlength="3">
+      <input ng-model="currentPlate.symbols[3]" type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.symbols[4]" type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.symbols[5]" type="number" name="quantity" min="0" max="9">
     </div>
     <div class="plate-t1-right-panel">
-      <input type="number" name="quantity" min="0" max="9">
-      <input type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.symbols[6]" type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.symbols[7]" type="number" name="quantity" min="0" max="9">
     </div>
   </div>
 </div>

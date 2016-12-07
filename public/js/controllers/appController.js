@@ -1,6 +1,7 @@
 var app = angular.module("app");
 
-app.controller("appController", function($scope) {
+app.controller("appController", function($scope, getInfo) {
+  $scope.platesInfo = [];
   $scope.init = function () {
     var blockContextMenu, myElement;
 
@@ -81,7 +82,6 @@ $scope.mouseup = function mouseup(e) {
       });
 
         $scope.canvas.add(rect);
-        var square = $scope.canvas.getActiveObject();
         $scope.canvas.renderAll();
         $scope.stateAdd = false;
     }
@@ -92,7 +92,6 @@ $scope.mouseup = function mouseup(e) {
   };
 
   $scope.keyPress = function(e) {
-    console.log(e.which);
     if(e.which === 39) { // ->
       $scope.next();
     } else if (e.which === 37) { // <-
@@ -111,5 +110,28 @@ $scope.mouseup = function mouseup(e) {
   $scope.removeRect = function() {
     $scope.canvas.getActiveObject().remove();
   };
+
+  $scope.addBoxes = function(boxes) {
+    for (var i = 0; i < boxes.length; i++) {
+      var rect = new fabric.Rect({
+        top : boxes[i].y ,
+        left : boxes[i].x,
+        width : boxes[i].w,
+        height : boxes[i].h,
+        fill : '',
+        stroke: 'white',
+        strokeWidth: 3
+      });
+      $scope.canvas.add(rect);
+      $scope.canvas.renderAll();
+    }
+  };
+
+  getInfo.platesInfo().then(function success(response) {
+    $scope.platesInfo = JSON.parse(response.data);
+    $scope.addBoxes($scope.platesInfo.boxes);
+  }, function failure(error) {
+    alert("there are some problems in loading the plate data");
+  });
 
 });

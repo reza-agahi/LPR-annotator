@@ -10,7 +10,6 @@ var nodeCompass = require('node-compass');
 
 // import routes
 var index = require('./routes/index');
-
 var app = express();
 
 // view engine setup
