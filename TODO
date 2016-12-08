@@ -15,3 +15,5 @@ add project management
 plate image should be responsive
 font of text input in plate-t1
 separate dev and other packages in package.json
+use npm clone for deep copy of objects, arrays, etc
+substitute mysql with mongo

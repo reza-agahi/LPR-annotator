@@ -1,11 +1,8 @@
 <div class="w3-section w3-center">
   <span>نوع پلاک: </span>
-  <input class="w3-radio" type="radio" name="type" value="t1" checked>
-  <label class="w3-validate">نوع یک</label>
-
-  <input class="w3-radio" type="radio" name="type" value="t2">
-  <label class="w3-validate">نوع دو</label>
-
-  <input class="w3-radio" type="radio" name="type" value="t3">
-  <label class="w3-validate">نوع سه</label>
+  <div style="display: inline;" ng-repeat="type in typesInfo">
+    <input class="w3-radio" type="radio" name="type" ng-checked="$index === 0"
+      ng-model="currentPlate.plate.type" ng-value="type.name">
+    <label class="w3-validate">{{ type.name }}</label>
+  </div>
 </div>

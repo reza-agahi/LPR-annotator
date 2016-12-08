@@ -1,16 +1,16 @@
 <div class="plate-t1 w3-section w3-row w3-center">
   <div class="plate-t1-background">
     <div class="plate-t1-left-panel">
-      <input ng-model="currentPlate.unOrdered[0]" type="number" name="quantity" min="0" max="9">
-      <input ng-model="currentPlate.symbols[1]" type="number" name="quantity" min="0" max="9">
-      <input ng-model="currentPlate.symbols[2]" type="text" maxlength="3">
-      <input ng-model="currentPlate.symbols[3]" type="number" name="quantity" min="0" max="9">
-      <input ng-model="currentPlate.symbols[4]" type="number" name="quantity" min="0" max="9">
-      <input ng-model="currentPlate.symbols[5]" type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.boxes[0].characters" type="number" name="quantity" min="0" max="9" ng-disabled="currentPlate.boxes.length < 1">
+      <input ng-model="currentPlate.boxes[1].characters" type="number" name="quantity" min="0" max="9" ng-disabled="currentPlate.boxes.length < 2">
+      <input ng-model="currentPlate.boxes[2].characters" type="text" maxlength="3" ng-disabled="currentPlate.boxes.length < 3">
+      <input ng-model="currentPlate.boxes[3].characters" type="number" name="quantity" min="0" max="9" ng-disabled="currentPlate.boxes.length < 4">
+      <input ng-model="currentPlate.boxes[4].characters" type="number" name="quantity" min="0" max="9" ng-disabled="currentPlate.boxes.length < 5">
+      <input ng-model="currentPlate.boxes[5].characters" type="number" name="quantity" min="0" max="9" ng-disabled="currentPlate.boxes.length < 6">
     </div>
     <div class="plate-t1-right-panel">
-      <input ng-model="currentPlate.symbols[6]" type="number" name="quantity" min="0" max="9">
-      <input ng-model="currentPlate.symbols[7]" type="number" name="quantity" min="0" max="9">
+      <input ng-model="currentPlate.boxes[6].characters" type="number" name="quantity" min="0" max="9" ng-disabled="currentPlate.boxes.length < 7">
+      <input ng-model="currentPlate.boxes[7].characters" type="number" name="quantity" min="0" max="9" ng-disabled="currentPlate.boxes.length < 8">
     </div>
   </div>
 </div>

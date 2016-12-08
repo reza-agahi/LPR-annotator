@@ -4,49 +4,7 @@ body {
   @extend .w3-yekan;
 }
 
-.plate-t1 {
-  .plate-t1-background {
-    position: relative;
-    background-image: url('../assets/images/samplePlate.png');
-    background-repeat: no-repeat;
-    background-position: center;
-    height: 132px;
-
-
-    .plate-t1-left-panel {
-      position: absolute;
-      left: 420px;
-      top: 15px;
-
-      input[type=number] {
-        width: 50px;
-        height: 100px;
-        font-size: 55px;
-      }
-      input[type=text] {
-        font-family: yekan;
-        width: 100px;
-        height: 100px;
-        font-size: 55px;
-      }
-    }
-    .plate-t1-right-panel {
-      position: absolute;
-      left: 815px;
-      top: 35px;
-      input[type=number] {
-        margin: 2px;
-        width: 45px;
-        height: 80px;
-        font-size: 40px;
-      }
-    }
-  }
-
-}
-
 #canvas-background {
-  background-image: url('../assets/images/sampleTruePlate.jpg');
   background-size: 651px 200px;
   background-repeat: no-repeat;
   background-position: center;
@@ -62,6 +20,7 @@ input {
 
 .arrow-keys {
   i {
+    color: red;
     cursor: pointer;
     font-size: 64px;
     position: absolute;
@@ -75,3 +34,6 @@ input {
     left: 150px;
   }
 }
+
+// plate templates
+@import "plateT1";
