@@ -6,9 +6,33 @@
 .w3-yekan *, body * {
   font-family: yekan; }
 
+#canvas-background {
+  background-size: 651px 200px;
+  background-repeat: no-repeat;
+  background-position: center;
+  position: absolute;
+  left: 0;
+  top: 0;
+  z-index: 0; }
+
+input {
+  text-align: center; }
+
+.arrow-keys i {
+  cursor: pointer;
+  font-size: 64px;
+  position: absolute;
+  top: 230px; }
+
+.arrow-keys #next {
+  right: 150px; }
+
+.arrow-keys #previous {
+  left: 150px; }
+
 .plate-t1 .plate-t1-background {
-  position: relative;
   background-image: url("../assets/images/samplePlate.png");
+  position: relative;
   background-repeat: no-repeat;
   background-position: center;
   height: 132px; }
@@ -34,28 +58,3 @@
       width: 45px;
       height: 80px;
       font-size: 40px; }
-
-#canvas-background {
-  background-image: url("../assets/images/sampleTruePlate.jpg");
-  background-size: 651px 200px;
-  background-repeat: no-repeat;
-  background-position: center;
-  position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 0; }
-
-input {
-  text-align: center; }
-
-.arrow-keys i {
-  cursor: pointer;
-  font-size: 64px;
-  position: absolute;
-  top: 230px; }
-
-.arrow-keys #next {
-  right: 150px; }
-
-.arrow-keys #previous {
-  left: 150px; }

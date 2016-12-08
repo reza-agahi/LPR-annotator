@@ -8,7 +8,6 @@ router.post('/', function(req, res){
     var plate = plates[0];
     platesModel.boxesInfo(plate.id).then(function(boxes) {
       var plateInfo = { plate: plate, boxes: boxes };
-      console.warn(plateInfo);
       res.json(JSON.stringify(plateInfo));
     })
   })
