@@ -19,7 +19,10 @@ input {
   text-align: center; }
 
 .arrow-keys i {
+<<<<<<< HEAD
   color: red;
+=======
+>>>>>>> 8761a319f18cca552e2d8a63e49c21993f8bf944
   cursor: pointer;
   font-size: 64px;
   position: absolute;

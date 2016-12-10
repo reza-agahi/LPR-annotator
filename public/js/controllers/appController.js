@@ -130,7 +130,6 @@ $scope.mouseup = function mouseup(e) {
 
   $scope.next = function() {
     $scope.currentPlate.plate.isChecked = true;
-    console.log($scope.currentPlate);
     updateInfo.plateInfo($scope.currentPlate).then(function success(response) {
       console.log(response.data);
     }, function failure(error) {

@@ -49,7 +49,6 @@ router.put('/', function(req, res){
   res.send("just shut up");
 
   // Q.all(updatePlatePromise, insertBoxInfoPromise, updateBoxInfoPromise);
-
 });
 
 module.exports = router;
