@@ -1,62 +1,83 @@
-var knex = require('knex')({
-  client: 'mysql',
-  connection: {
-    host : 'localhost',
-    user : 'root',
-    password : '1421371',
-    database : 'LPR-annotator'
-  }
-});
+var MongoClient = require('mongodb').MongoClient
+  , assert = require('assert');
 
-exports.plateInfo = function() {
-    return knex.select(['plates.id', 'difficulties.name as difficulty',
-                        'types.name as type', 'plates.imageName', 'plates.isAnnotatable',
-                        'plates.isChecked'])
-    .from('plates', 'difficulties', 'types')
-    .innerJoin('difficulties', 'difficulties.id', 'plates.difficultyId')
-    .innerJoin('types', 'types.id', 'plates.typeId');
-    // .where({ isChecked: 0 });
-}
+// Connection URL
+var url = 'mongodb://localhost:27017/LPR-annotator';
 
-exports.boxesInfo = function(plateId) {
-    return knex.select('id', 'characters', 'x', 'y', 'w', 'h').table('boxes').where({ plateId: plateId });
-}
+exports.insertPlate = function(plate) {
+  // Use connect method to connect to the Server
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected correctly to server");
 
-exports.updatePlateInfo = function(plate, typeId, difficultyId) {
-  return knex('plates')
-  .where({id: plate.id})
-  .update({
-    difficultyId: difficultyId,
-    typeId: typeId,
-    isChecked: Number(plate.isChecked),
-    isAnnotatable: Number(plate.isAnnotatable)
+    // Get the documents collection
+    var collection = db.collection('plates');
+    // Insert some documents
+    collection.insert(plate, function(err, result) {
+      assert.equal(err, null);
+      assert.equal(1, result.result.n);
+      console.log("Inserted a plate document into the plates collection");
+    });
+
+    db.close();
   });
 }
 
-exports.updateBoxInfo = function(box) {
-  return knex('boxes')
-  .where({id: box.id})
-  .update({
-    x: box.x,
-    y: box.y,
-    w: box.w,
-    h: box.h,
-    characters: box.characters
+exports.insertPlateBatch = function(plates) {
+  // Use connect method to connect to the Server
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected correctly to server");
+
+    // Get the documents collection
+    var collection = db.collection('plates');
+    // Insert some documents
+    collection.insertMany(plates, function(err, result) {
+      assert.equal(err, null);
+      console.log("Inserted plate documents into the plates collection");
+    });
+
+    db.close();
   });
 }
 
-exports.insertBoxInfo = function(box) {
-  return knex('boxes').insert(box);
+exports.updatePlate = function(query, update) {
+  // Use connect method to connect to the Server
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.warn("Connected correctly to server");
+
+    var collection = db.collection('plates');
+    collection.update(query, update, function(err, result) {
+      assert.equal(err, null);
+      assert.equal(1, result.result.n);
+      console.log("Updated the plate document");
+    });
+
+    db.close();
+  });
 }
 
-exports.getTypeId = function(typeName) {
-  return knex.select(['types.id'])
-  .from('types')
-  .where({ name: typeName });
-}
+exports.getPlate = function(query, index, callback) {
+  // Use connect method to connect to the Server
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected correctly to server");
 
-exports.getDifficultiesId = function(difficultyName) {
-  return knex.select(['difficulties.id'])
-  .from('difficulties')
-  .where({ name: difficultyName });
+    var collection = db.collection('plates');
+    collection.find(query).sort({_id:1}).toArray(function(err, docs) {
+      if (docs.length === index) {
+        index--;
+      } else if (docs.length === -1) {
+        index++;
+      }
+      var doc = docs[index];
+      assert.equal(err, null);
+      console.log("Found the following record");
+      console.dir(doc);
+      callback(doc);
+    });
+
+    db.close();
+  });
 }

@@ -2,7 +2,7 @@
   <span>میزان سختی: </span>
   <div style="display: inline;" ng-repeat="difficulty in difficultiesInfo">
     <input class="w3-radio" type="radio" name="difficulty" ng-checked="$index === 0"
-      ng-model="currentPlate.plate.difficulty" ng-value="difficulty.name" >
-    <label class="w3-validate">{{ difficulty.name }}</label>
+      ng-model="currentPlate.difficulty" ng-value="difficulty" >
+    <label class="w3-validate">{{ difficulty }}</label>
   </div>
 </div>

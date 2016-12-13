@@ -129,7 +129,7 @@ $scope.mouseup = function mouseup(e) {
 }
 
   $scope.next = function() {
-    $scope.currentPlate.plate.isChecked = true;
+    $scope.currentPlate.isChecked = true;
     updateInfo.plateInfo($scope.currentPlate).then(function success(response) {
       console.log(response.data);
     }, function failure(error) {
@@ -141,11 +141,11 @@ $scope.mouseup = function mouseup(e) {
       $scope.plateInfo = JSON.parse(response.data);
       $scope.currentPlate = $scope.plateInfo;
       $scope.orderBoxes($scope.currentPlate.boxes);
-      $scope.plateZeroOneToBoolean($scope.currentPlate.plate);
+      $scope.plateZeroOneToBoolean($scope.currentPlate);
       $scope.boxesCharactersToNumber($scope.currentPlate.boxes);
       // TODO: this will be change later for supporting multiple plates loading
       $scope.addBoxes($scope.plateInfo.boxes);
-      $scope.setImage('canvas-background', $scope.currentPlate.plate.imageName);
+      $scope.setImage('canvas-background', $scope.currentPlate.image);
       console.log($scope.plateInfo);
     }, function failure(error) {
       alert("there are some problems in loading the plate data");
@@ -165,7 +165,7 @@ $scope.mouseup = function mouseup(e) {
   };
 
   $scope.previous = function() {
-    $scope.currentPlate.plate.isChecked = true;
+    $scope.currentPlate.isChecked = true;
     updateInfo.plateInfo($scope.currentPlate).then(function success(response) {
       console.log(response.data);
     }, function failure(error) {
@@ -177,11 +177,11 @@ $scope.mouseup = function mouseup(e) {
       $scope.plateInfo = JSON.parse(response.data);
       $scope.currentPlate = $scope.plateInfo;
       $scope.orderBoxes($scope.currentPlate.boxes);
-      $scope.plateZeroOneToBoolean($scope.currentPlate.plate);
+      $scope.plateZeroOneToBoolean($scope.currentPlate);
       $scope.boxesCharactersToNumber($scope.currentPlate.boxes);
       // TODO: this will be change later for supporting multiple plates loading
       $scope.addBoxes($scope.plateInfo.boxes);
-      $scope.setImage('canvas-background', $scope.currentPlate.plate.imageName);
+      $scope.setImage('canvas-background', $scope.currentPlate.image);
       console.log($scope.plateInfo);
     }, function failure(error) {
       alert("there are some problems in loading the plate data");
@@ -257,12 +257,11 @@ $scope.mouseup = function mouseup(e) {
     $scope.plateInfo = JSON.parse(response.data);
     $scope.currentPlate = $scope.plateInfo;
     $scope.orderBoxes($scope.currentPlate.boxes);
-    $scope.plateZeroOneToBoolean($scope.currentPlate.plate);
+    $scope.plateZeroOneToBoolean($scope.currentPlate);
     $scope.boxesCharactersToNumber($scope.currentPlate.boxes);
     // TODO: this will be change later for supporting multiple plates loading
     $scope.addBoxes($scope.plateInfo.boxes);
-    $scope.setImage('canvas-background', $scope.currentPlate.plate.imageName);
-    console.log($scope.plateInfo);
+    $scope.setImage('canvas-background', $scope.currentPlate.image);
   }, function failure(error) {
     alert("there are some problems in loading the plate data");
   });
@@ -274,6 +273,7 @@ $scope.mouseup = function mouseup(e) {
   });
 
   getInfo.difficultiesInfo().then(function success(response) {
+    console.log(JSON.parse(response.data));
     $scope.difficultiesInfo = JSON.parse(response.data);
   }, function failure(error) {
     alert("there are some problems in loading the difficulties data");

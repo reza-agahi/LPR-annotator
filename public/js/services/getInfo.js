@@ -10,12 +10,12 @@ app.factory("getInfo", function($http) {
     previousPlateInfo: function() {
       return $http({method: 'post', url: '/plateInfo/previous'});
     },
-    typesInfo: function() {
-      return $http({method: 'post', url: '/typesInfo'});
-    },
     difficultiesInfo: function() {
       return $http({method: 'post', url: '/difficultiesInfo'});
     },
+    typesInfo: function() {
+      return $http({method: 'post', url: '/typesInfo'});
+    }
 
   };
 

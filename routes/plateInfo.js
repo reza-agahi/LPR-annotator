@@ -5,45 +5,23 @@ var platesModel = require('../models/plates.js');
 
 router.post('/', function(req, res){
   req.session.plateIndex = 0;
-  platesModel.plateInfo().then(function(plates) {
-    for (var i = 0; i < plates.length; i++) {
-      if (plates[i].isChecked == 0) {
-        req.session.plateIndex = i;
-        break;
-      }
-    }
-    var plate = plates[req.session.plateIndex];
-    platesModel.boxesInfo(plate.id).then(function(boxes) {
-      var plateInfo = { plate: plate, boxes: boxes };
-      res.json(JSON.stringify(plateInfo));
-    })
-  })
+  platesModel.getPlate({isChecked: true}, req.session.plateIndex, function(plate) {
+    res.json(JSON.stringify(plate));
+  });
 });
 
 router.post('/next', function(req, res){
-  platesModel.plateInfo().then(function(plates) {
-    if (req.session.plateIndex < plates.length-1) {
-      req.session.plateIndex++;
-    }
-    var plate = plates[req.session.plateIndex];
-    platesModel.boxesInfo(plate.id).then(function(boxes) {
-      var plateInfo = { plate: plate, boxes: boxes };
-      res.json(JSON.stringify(plateInfo));
-    })
-  })
+  req.session.plateIndex++;
+  platesModel.getPlate({}, req.session.plateIndex, function(plate) {
+    res.json(JSON.stringify(plate));
+  });
 });
 
 router.post('/previous', function(req, res){
-  platesModel.plateInfo().then(function(plates) {
-    if (req.session.plateIndex > 0) {
-      req.session.plateIndex--;
-    }
-    var plate = plates[req.session.plateIndex];
-    platesModel.boxesInfo(plate.id).then(function(boxes) {
-      var plateInfo = { plate: plate, boxes: boxes };
-      res.json(JSON.stringify(plateInfo));
-    })
-  })
+  req.session.plateIndex--;
+  platesModel.getPlate({}, req.session.plateIndex, function(plate) {
+    res.json(JSON.stringify(plate));
+  });
 });
 
 module.exports = router;

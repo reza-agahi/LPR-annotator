@@ -20,6 +20,7 @@ router.use('/plateInfo', plateInfo);
 router.use('/updatePlateInfo', updatePlateInfo);
 router.use('/typesInfo', typesInfo);
 router.use('/difficultiesInfo', difficultiesInfo);
+// TODO: remove these two!
 router.use('/', images);
 
 /* GET home page. */
