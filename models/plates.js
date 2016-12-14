@@ -35,9 +35,9 @@ exports.insertPlateBatch = function(plates) {
     collection.insertMany(plates, function(err, result) {
       assert.equal(err, null);
       console.log("Inserted plate documents into the plates collection");
+      db.close();
     });
 
-    db.close();
   });
 }
 
