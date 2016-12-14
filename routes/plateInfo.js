@@ -12,14 +12,16 @@ router.post('/', function(req, res){
 
 router.post('/next', function(req, res){
   req.session.plateIndex++;
-  platesModel.getPlate({}, req.session.plateIndex, function(plate) {
+  platesModel.getPlate({}, req.session.plateIndex, function(plate, plateIndex) {
+    req.session.plateIndex = plateIndex;
     res.json(JSON.stringify(plate));
   });
 });
 
 router.post('/previous', function(req, res){
   req.session.plateIndex--;
-  platesModel.getPlate({}, req.session.plateIndex, function(plate) {
+  platesModel.getPlate({}, req.session.plateIndex, function(plate, plateIndex) {
+    req.session.plateIndex = plateIndex;
     res.json(JSON.stringify(plate));
   });
 });

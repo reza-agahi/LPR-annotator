@@ -17,9 +17,9 @@ exports.insertPlate = function(plate) {
       assert.equal(err, null);
       assert.equal(1, result.result.n);
       console.log("Inserted a plate document into the plates collection");
+      db.close();
     });
 
-    db.close();
   });
 }
 
@@ -41,7 +41,7 @@ exports.insertPlateBatch = function(plates) {
   });
 }
 
-exports.updatePlate = function(query, update) {
+exports.updatePlate = function(query, update, callback) {
   // Use connect method to connect to the Server
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
@@ -52,9 +52,10 @@ exports.updatePlate = function(query, update) {
       assert.equal(err, null);
       assert.equal(1, result.result.n);
       console.log("Updated the plate document");
+      callback();
+      db.close();
     });
 
-    db.close();
   });
 }
 
@@ -66,18 +67,18 @@ exports.getPlate = function(query, index, callback) {
 
     var collection = db.collection('plates');
     collection.find(query).sort({_id:1}).toArray(function(err, docs) {
-      if (docs.length === index) {
-        index--;
-      } else if (docs.length === -1) {
-        index++;
+      if (index >= docs.length) {
+        index = docs.length-1;
+      } else if (index < 0 ) {
+        index = 0;
       }
       var doc = docs[index];
       assert.equal(err, null);
       console.log("Found the following record");
       console.dir(doc);
-      callback(doc);
+      callback(doc, index);
+      db.close();
     });
 
-    db.close();
   });
 }
