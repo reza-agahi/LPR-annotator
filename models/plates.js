@@ -68,17 +68,33 @@ exports.getFirstPlate = function(query, callback) {
 
     var collection = db.collection('plates');
     collection.find(query).sort({_id:1}).toArray(function(err, docs) {
-      var doc = docs[0];
-      assert.equal(err, null);
-      console.log("Found the following record");
-      console.dir(doc);
-      collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+      if (docs.length === 0) {
+        collection.find({state: 'annotated'}).sort({_id:1}).toArray(function(err, docs) {
+          var doc = docs[0];
+          assert.equal(err, null);
+          console.log("Found the following record");
+          console.dir(doc);
+          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+            assert.equal(err, null);
+            assert.equal(1, result.result.n);
+            console.log("change document state: initial -> checking");
+            callback(doc);
+            db.close();
+          });
+        })
+      } else {
+        var doc = docs[0];
         assert.equal(err, null);
-        assert.equal(1, result.result.n);
-        console.log("change document state: initial -> checking");
-        callback(doc);
-        db.close();
-      });
+        console.log("Found the following record");
+        console.dir(doc);
+        collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+          assert.equal(err, null);
+          assert.equal(1, result.result.n);
+          console.log("change document state: initial -> checking");
+          callback(doc);
+          db.close();
+        });
+      }
     });
 
   });
