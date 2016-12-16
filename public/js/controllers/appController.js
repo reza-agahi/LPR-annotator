@@ -1,11 +1,12 @@
 var app = angular.module("app");
 
-app.controller("appController", function($scope, getInfo, updateInfo) {
+app.controller("appController", function($scope, $window, getInfo, updateInfo) {
   $scope.difficultiesInfo = [];
   $scope.typesInfo = [];
   $scope.plateInfo = [];
   $scope.currentPlate = [];
   $scope.currentBox = [];
+  $scope.plateState = 'initial';
   $scope.init = function () {
     var blockContextMenu, myElement;
 
@@ -129,14 +130,14 @@ $scope.mouseup = function mouseup(e) {
 }
 
   $scope.next = function() {
-    $scope.currentPlate.isChecked = true;
+    $scope.currentPlate.state = 'annotated';
     updateInfo.plateInfo($scope.currentPlate).then(function success(response) {
       console.log(response.data);
     }, function failure(error) {
       alert("there are some problems in updating the plate data");
     });
 
-    getInfo.nextPlateInfo().then(function success(response) {
+    getInfo.nextPlateInfo({plateState: $scope.plateState}).then(function success(response) {
       $scope.canvas.clear();
       $scope.plateInfo = JSON.parse(response.data);
       $scope.currentPlate = $scope.plateInfo;
@@ -165,14 +166,14 @@ $scope.mouseup = function mouseup(e) {
   };
 
   $scope.previous = function() {
-    $scope.currentPlate.isChecked = true;
+    $scope.currentPlate.state = 'annotated';
     updateInfo.plateInfo($scope.currentPlate).then(function success(response) {
       console.log(response.data);
     }, function failure(error) {
       alert("there are some problems in updating the plate data");
     });
 
-    getInfo.previousPlateInfo().then(function success(response) {
+    getInfo.previousPlateInfo({plateState: $scope.plateState}).then(function success(response) {
       $scope.canvas.clear();
       $scope.plateInfo = JSON.parse(response.data);
       $scope.currentPlate = $scope.plateInfo;
@@ -239,7 +240,7 @@ $scope.mouseup = function mouseup(e) {
 
   $scope.plateZeroOneToBoolean = function (plate) {
     for (var key in plate) {
-      if (plate.hasOwnProperty(key) && (key === "isAnnotatable" || key === "isChecked")) {
+      if (plate.hasOwnProperty(key) && (key === "isAnnotatable")) {
         if (plate[key] == false) {
           plate[key] = false;
         } else if (plate[key] == true) {
@@ -253,7 +254,7 @@ $scope.mouseup = function mouseup(e) {
     $('#' + id).css('background-image', 'url(' + imageUrl + ')');
   };
 
-  getInfo.plateInfo().then(function success(response) {
+  getInfo.plateInfo({plateState: $scope.plateState}).then(function success(response) {
     $scope.plateInfo = JSON.parse(response.data);
     $scope.currentPlate = $scope.plateInfo;
     $scope.orderBoxes($scope.currentPlate.boxes);

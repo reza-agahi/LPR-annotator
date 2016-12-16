@@ -1,14 +1,14 @@
 app.factory("getInfo", function($http) {
 
   return {
-    plateInfo: function() {
-      return $http({method: 'post', url: '/plateInfo'});  //1. this returns promise
+    plateInfo: function(justInitialPlate) {
+      return $http({method: 'post', url: '/plateInfo', data: justInitialPlate});  //1. this returns promise
     },
-    nextPlateInfo: function() {
-      return $http({method: 'post', url: '/plateInfo/next'});
+    nextPlateInfo: function(justInitialPlate) {
+      return $http({method: 'post', url: '/plateInfo/next', data: justInitialPlate});
     },
-    previousPlateInfo: function() {
-      return $http({method: 'post', url: '/plateInfo/previous'});
+    previousPlateInfo: function(justInitialPlate) {
+      return $http({method: 'post', url: '/plateInfo/previous', data: justInitialPlate});
     },
     difficultiesInfo: function() {
       return $http({method: 'post', url: '/difficultiesInfo'});

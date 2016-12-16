@@ -29,6 +29,30 @@ server.listen(port);
 server.on('error', onError);
 server.on('listening', onListening);
 
+// Create a Socket.IO instance, passing it our server
+var cookie = require('cookie');
+var io = require('socket.io')(server);
+var sessionsModel = require('../models/session.js');
+var platesModel = require('../models/plates.js');
+var objectId = require('mongodb').ObjectID;
+io.on('connection', function(socket){
+  var cookie_string = socket.request.headers.cookie;
+  socket.on('disconnect', function(){
+    console.warn('user disconnected');
+    var parsed_cookies = cookie.parse(cookie_string);
+    var connect_sid = parsed_cookies['connect.sid'].split('.')[0].split(':')[1];
+    if (connect_sid) {
+      sessionsModel.getSession(connect_sid, function (sessionDoc) {
+        var plateId = JSON.parse(sessionDoc.session).plateId;
+        plateId = new objectId(plateId);
+        platesModel.updatePlate({'_id': plateId}, { $set: {state: "initial"} }, function() {
+          console.warn("disconnected client plate state is changed to initial");
+        });
+      });
+    }
+  });
+});
+
 /**
  * Normalize a port into a number, string, or false.
  */

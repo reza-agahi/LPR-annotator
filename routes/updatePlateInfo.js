@@ -7,7 +7,6 @@ var platesModel = require('../models/plates.js');
 
 router.put('/', function(req, res){
   var updatingPlate = req.body;
-  console.warn(updatingPlate.image);
   updatingPlate._id = new objectId(updatingPlate._id);
   platesModel.updatePlate({'_id': updatingPlate._id}, updatingPlate, function() {
     res.send("plate is updated successfully");
