@@ -11,8 +11,7 @@ router.post('/', function(req, res){
   } else if(data.plateState === 'annotated') {
     query = {state: 'annotated'};
   }
-  req.session.plateIndex = 0;
-  platesModel.getPlate(query, req.session.plateIndex, true, function(plate) {
+  platesModel.getFirstPlate(query, function(plate) {
     req.session.plateId = plate._id;
     res.json(JSON.stringify(plate));
   });
@@ -26,9 +25,7 @@ router.post('/next', function(req, res){
   } else if(data.plateState === 'annotated') {
     query = {state: 'annotated'};
   }
-  req.session.plateIndex++;
-  platesModel.getPlate(query, req.session.plateIndex, true, function(plate, plateIndex) {
-    req.session.plateIndex = plateIndex;
+  platesModel.getNextPlate(query, req.session.plateId, function(plate) {
     req.session.plateId = plate._id;
     res.json(JSON.stringify(plate));
   });
@@ -42,9 +39,7 @@ router.post('/previous', function(req, res){
   } else if(data.plateState === 'annotated') {
     query = {state: 'annotated'};
   }
-  req.session.plateIndex--;
-  platesModel.getPlate(query, req.session.plateIndex, false, function(plate, plateIndex) {
-    req.session.plateIndex = plateIndex;
+  platesModel.getPreviousPlate(query, req.session.plateId, function(plate) {
     req.session.plateId = plate._id;
     res.json(JSON.stringify(plate));
   });
