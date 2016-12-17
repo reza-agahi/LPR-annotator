@@ -5,11 +5,12 @@
     background-repeat: no-repeat;
     background-position: center;
     height: 132px;
-
+    width: 600px;
+    margin: auto;
 
     .plate-t1-left-panel {
       position: absolute;
-      left: 420px;
+      left: 80px;
       top: 15px;
 
       input[type=number] {
@@ -26,7 +27,7 @@
     }
     .plate-t1-right-panel {
       position: absolute;
-      left: 815px;
+      left: 475px;
       top: 35px;
       input[type=number] {
         margin: 2px;

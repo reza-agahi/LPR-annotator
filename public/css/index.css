@@ -32,10 +32,12 @@ input {
   position: relative;
   background-repeat: no-repeat;
   background-position: center;
-  height: 132px; }
+  height: 132px;
+  width: 600px;
+  margin: auto; }
   .plate-t1 .plate-t1-background .plate-t1-left-panel {
     position: absolute;
-    left: 420px;
+    left: 80px;
     top: 15px; }
     .plate-t1 .plate-t1-background .plate-t1-left-panel input[type=number] {
       width: 50px;
@@ -48,7 +50,7 @@ input {
       font-size: 55px; }
   .plate-t1 .plate-t1-background .plate-t1-right-panel {
     position: absolute;
-    left: 815px;
+    left: 475px;
     top: 35px; }
     .plate-t1 .plate-t1-background .plate-t1-right-panel input[type=number] {
       margin: 2px;
