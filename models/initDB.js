@@ -52,7 +52,7 @@ var platesModel = require('../models/plates.js');
 
 var types = [
   {
-    name: "نوع یک",
+    name: "خودروهای شخصی",
     image: "./assets/images/samplePlate.png"
   },
   {

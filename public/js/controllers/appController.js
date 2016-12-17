@@ -7,6 +7,8 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
   $scope.currentPlate = [];
   $scope.currentBox = [];
   $scope.plateState = 'initial';
+  $scope.currentPlateScaleX = 1;
+  $scope.currentPlateScaleY = 1;
   $scope.init = function () {
     var blockContextMenu, myElement;
 
@@ -19,6 +21,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
   }
   $scope.init();
   $scope.canvas = new fabric.Canvas('canvas');
+
   $scope.canvas.observe('mouse:down', function(e) { $scope.mousedown(e); });
   $scope.canvas.observe('mouse:move', function(e) { $scope.mousemove(e); });
   $scope.canvas.observe('mouse:up', function(e) { $scope.mouseup(e); });
@@ -57,10 +60,6 @@ $scope.setDimensionsOfCurrentActiveBox = function(box) {
   box.w = $scope.canvas.getActiveObject().get('cacheWidth');
   box.h = $scope.canvas.getActiveObject().get('cacheHeight');
 };
-
-// $scope.setCurrentActiveBoxCharacters = function(characters) {
-//   $scope.currentBox
-// };
 
 /* Mousemove */
 $scope.mousemove = function mousemove(e) {
@@ -106,11 +105,11 @@ $scope.mouseup = function mouseup(e) {
         width : w,
         height : h,
         fill : '',
-        stroke: 'white',
+        stroke: 'red',
         strokeWidth: 3
       });
 
-        $scope.currentPlate.boxes.push({id: -1, characters: -1, x: x, y: y, w: w, h: h});
+        $scope.currentPlate.boxes.push({symbol: undefined, x: x, y: y, w: w, h: h});
 
         $scope.canvas.add(rect);
         $scope.canvas.renderAll();
@@ -129,8 +128,27 @@ $scope.mouseup = function mouseup(e) {
     $scope.$apply();
 }
 
+$scope.boxDimensionsMultiplication = function(scaleX, scaleY) {
+  for (var i = 0; i < $scope.currentPlate.boxes.length; i++) {
+    $scope.currentPlate.boxes[i].x = Math.round($scope.currentPlate.boxes[i].x * scaleX);
+    $scope.currentPlate.boxes[i].y = Math.round($scope.currentPlate.boxes[i].y * scaleY);
+    $scope.currentPlate.boxes[i].w = Math.round($scope.currentPlate.boxes[i].w * scaleX);
+    $scope.currentPlate.boxes[i].h = Math.round($scope.currentPlate.boxes[i].h * scaleY);
+  }
+}
+
+$scope.boxDimensionsDivision = function(scaleX, scaleY) {
+  for (var i = 0; i < $scope.currentPlate.boxes.length; i++) {
+    $scope.currentPlate.boxes[i].x = Math.round($scope.currentPlate.boxes[i].x / scaleX);
+    $scope.currentPlate.boxes[i].y = Math.round($scope.currentPlate.boxes[i].y / scaleY);
+    $scope.currentPlate.boxes[i].w = Math.round($scope.currentPlate.boxes[i].w / scaleX);
+    $scope.currentPlate.boxes[i].h = Math.round($scope.currentPlate.boxes[i].h / scaleY);
+  }
+}
+
   $scope.next = function() {
     $scope.currentPlate.state = 'annotated';
+    $scope.boxDimensionsDivision($scope.currentPlateScaleX, $scope.currentPlateScaleY);
     updateInfo.plateInfo($scope.currentPlate).then(function success(response) {
       console.log(response.data);
     }, function failure(error) {
@@ -141,13 +159,24 @@ $scope.mouseup = function mouseup(e) {
       $scope.canvas.clear();
       $scope.plateInfo = JSON.parse(response.data);
       $scope.currentPlate = $scope.plateInfo;
-      $scope.orderBoxes($scope.currentPlate.boxes);
-      $scope.plateZeroOneToBoolean($scope.currentPlate);
-      $scope.boxesCharactersToNumber($scope.currentPlate.boxes);
-      // TODO: this will be change later for supporting multiple plates loading
-      $scope.addBoxes($scope.plateInfo.boxes);
-      $scope.setImage('canvas-background', $scope.currentPlate.image);
-      console.log($scope.plateInfo);
+      var img = new Image();
+      img.onload = function() {
+        $scope.orderBoxes($scope.currentPlate.boxes);
+        $scope.plateZeroOneToBoolean($scope.currentPlate);
+        $scope.boxesSymbolToNumber($scope.currentPlate.boxes);
+        $scope.currentPlateScaleX = $scope.canvas.width / this.width;
+        $scope.currentPlateScaleY = $scope.canvas.height / this.height;
+        $scope.boxDimensionsMultiplication($scope.currentPlateScaleX, $scope.currentPlateScaleY);
+        $scope.addBoxes($scope.plateInfo.boxes);
+        $scope.canvas.setBackgroundImage($scope.currentPlate.image, $scope.canvas.renderAll.bind($scope.canvas), {
+          width: $scope.canvas.width,
+          height: $scope.canvas.height,
+          // Needed to position backgroundImage at 0/0
+          originX: 'left',
+          originY: 'top'
+        });
+      }
+      img.src = $scope.currentPlate.image;
     }, function failure(error) {
       alert("there are some problems in loading the plate data");
     });
@@ -167,6 +196,7 @@ $scope.mouseup = function mouseup(e) {
 
   $scope.previous = function() {
     $scope.currentPlate.state = 'annotated';
+    $scope.boxDimensionsDivision($scope.currentPlateScaleX, $scope.currentPlateScaleY);
     updateInfo.plateInfo($scope.currentPlate).then(function success(response) {
       console.log(response.data);
     }, function failure(error) {
@@ -177,13 +207,25 @@ $scope.mouseup = function mouseup(e) {
       $scope.canvas.clear();
       $scope.plateInfo = JSON.parse(response.data);
       $scope.currentPlate = $scope.plateInfo;
-      $scope.orderBoxes($scope.currentPlate.boxes);
-      $scope.plateZeroOneToBoolean($scope.currentPlate);
-      $scope.boxesCharactersToNumber($scope.currentPlate.boxes);
-      // TODO: this will be change later for supporting multiple plates loading
-      $scope.addBoxes($scope.plateInfo.boxes);
-      $scope.setImage('canvas-background', $scope.currentPlate.image);
-      console.log($scope.plateInfo);
+      var img = new Image();
+      img.onload = function() {
+        $scope.orderBoxes($scope.currentPlate.boxes);
+        $scope.plateZeroOneToBoolean($scope.currentPlate);
+        $scope.boxesSymbolToNumber($scope.currentPlate.boxes);
+        $scope.currentPlateScaleX = $scope.canvas.width / this.width;
+        $scope.currentPlateScaleY = $scope.canvas.height / this.height;
+        $scope.boxDimensionsMultiplication($scope.currentPlateScaleX, $scope.currentPlateScaleY);
+        $scope.addBoxes($scope.plateInfo.boxes);
+        $scope.canvas.setBackgroundImage($scope.currentPlate.image, $scope.canvas.renderAll.bind($scope.canvas), {
+          width: $scope.canvas.width,
+          height: $scope.canvas.height,
+          // Needed to position backgroundImage at 0/0
+          originX: 'left',
+          originY: 'top'
+        });
+      }
+      img.src = $scope.currentPlate.image;
+
     }, function failure(error) {
       alert("there are some problems in loading the plate data");
     });
@@ -210,7 +252,7 @@ $scope.mouseup = function mouseup(e) {
         width : boxes[i].w,
         height : boxes[i].h,
         fill : '',
-        stroke: 'white',
+        stroke: 'red',
         strokeWidth: 3
       });
       $scope.canvas.add(rect);
@@ -230,10 +272,10 @@ $scope.mouseup = function mouseup(e) {
     return 0;
   }
 
-  $scope.boxesCharactersToNumber = function(boxes) {
+  $scope.boxesSymbolToNumber = function(boxes) {
     for (var i = 0; i < boxes.length; i++) {
-      if(Number(boxes[i].characters) == boxes[i].characters) {
-        boxes[i].characters = Number(boxes[i].characters);
+      if(Number(boxes[i].symbol) == boxes[i].symbol) {
+        boxes[i].symbol = Number(boxes[i].symbol);
       }
     }
   }
@@ -257,12 +299,25 @@ $scope.mouseup = function mouseup(e) {
   getInfo.plateInfo({plateState: $scope.plateState}).then(function success(response) {
     $scope.plateInfo = JSON.parse(response.data);
     $scope.currentPlate = $scope.plateInfo;
-    $scope.orderBoxes($scope.currentPlate.boxes);
-    $scope.plateZeroOneToBoolean($scope.currentPlate);
-    $scope.boxesCharactersToNumber($scope.currentPlate.boxes);
-    // TODO: this will be change later for supporting multiple plates loading
-    $scope.addBoxes($scope.plateInfo.boxes);
-    $scope.setImage('canvas-background', $scope.currentPlate.image);
+    var img = new Image();
+    img.onload = function() {
+      $scope.orderBoxes($scope.currentPlate.boxes);
+      $scope.plateZeroOneToBoolean($scope.currentPlate);
+      $scope.boxesSymbolToNumber($scope.currentPlate.boxes);
+      $scope.currentPlateScaleX = $scope.canvas.width / this.width;
+      $scope.currentPlateScaleY = $scope.canvas.height / this.height;
+      $scope.boxDimensionsMultiplication($scope.currentPlateScaleX, $scope.currentPlateScaleY);
+      $scope.addBoxes($scope.plateInfo.boxes);
+      $scope.canvas.setBackgroundImage($scope.currentPlate.image, $scope.canvas.renderAll.bind($scope.canvas), {
+        width: $scope.canvas.width,
+        height: $scope.canvas.height,
+        // Needed to position backgroundImage at 0/0
+        originX: 'left',
+        originY: 'top'
+      });
+    }
+    img.src = $scope.currentPlate.image;
+
   }, function failure(error) {
     alert("there are some problems in loading the plate data");
   });

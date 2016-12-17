@@ -6,23 +6,16 @@
 .w3-yekan *, body * {
   font-family: yekan; }
 
-#canvas-background {
-  background-size: 651px 200px;
-  background-repeat: no-repeat;
-  background-position: center;
+#canvas {
   position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 0; }
+  width: 600px;
+  height: 200px; }
 
 input {
   text-align: center; }
 
 .arrow-keys i {
-<<<<<<< HEAD
   color: red;
-=======
->>>>>>> 8761a319f18cca552e2d8a63e49c21993f8bf944
   cursor: pointer;
   font-size: 64px;
   position: absolute;

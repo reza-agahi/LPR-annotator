@@ -30,13 +30,10 @@
         <div class="w3-center">
           <input class="w3-radio" type="radio" name="plate-state" ng-checked="plateState === 'initial'"
             ng-model="plateState" value="initial" >
-          <label class="w3-validate">فقط برچسب نخورده ها</label>
+          <label class="w3-validate">برچسب نخورده ها</label>
           <input class="w3-radio" type="radio" name="plate-state" ng-checked="plateState === 'annotated'"
             ng-model="plateState" value="annotated" >
-          <label class="w3-validate">فقط برچسب خورده ها</label>
-
-          <!-- <input type="checkbox" class="w3-check" ng-checked="plateState==='initial'" ng-model="plateState">
-          <label class="w3-validate">فقط برچسب نخورده ها</label> -->
+          <label class="w3-validate">برچسب خورده ها</label>
         </div>
         <p>
           <span><i style="position: relative; top: 8px;" class="w3-round-xlarge w3-green material-icons">add</i></span>
@@ -45,9 +42,8 @@
           <span><i style="position: relative; top: 8px;" class="w3-round-xlarge w3-red material-icons">remove</i></span>
           <span>روی مستطیل مورد نظر کلیک کنید و سپس با دکمه d آن را حذف نمایید.</span>
         </p>
-        <div style="margin-top: 2px; position: relative;" class="plateBox w3-row w3-center">
-          <canvas id="canvas-background" width="651px" ></canvas>
-          <canvas style="position: absolute; left: 0; top: 0; z-index: 1;" id="canvas" width="651px"></canvas>
+        <div style="width: 600px; margin: auto;"  class="w3-center">
+          <canvas id="canvas" width="600px" height="150px" class="w3-center"></canvas>
         </div>
       </div>
 
@@ -63,7 +59,6 @@
 
 
       <img ng-show="currentPlate.state=='annotated'" style="position: absolute; left:100px; top: 20px;" width="100" height="100" src="./assets/images/checked.jpg" alt="checked-badge" />
-
 
     </section>
 

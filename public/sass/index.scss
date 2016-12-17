@@ -4,14 +4,10 @@ body {
   @extend .w3-yekan;
 }
 
-#canvas-background {
-  background-size: 651px 200px;
-  background-repeat: no-repeat;
-  background-position: center;
+#canvas {
   position: absolute;
-  left: 0;
-  top: 0;
-  z-index: 0;
+  width: 600px;
+  height: 200px;
 }
 
 input {

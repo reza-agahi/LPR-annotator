@@ -5,11 +5,7 @@ var router = express.Router();
 
 var types = [
   {
-    name: "نوع یک",
-    image: "./assets/images/samplePlate.png"
-  },
-  {
-    name: "نوع دو",
+    name: "خودروهای شخصی",
     image: "./assets/images/samplePlate.png"
   }
 ];
