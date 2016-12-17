@@ -12,9 +12,6 @@ var MongoStore = require('connect-mongo')(expressSession);
 var index = require('./routes/index');
 var app = express();
 
-// view engine setup
-app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'hjs');
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));
@@ -27,6 +24,10 @@ app.use(expressSession({ secret: 'keyboard cat', store: new MongoStore({ url: 'm
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', index);
+
+// view engine setup
+app.set('views', path.join(__dirname, 'views'));
+app.set('view engine', 'hjs');
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

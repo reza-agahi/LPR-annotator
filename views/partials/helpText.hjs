@@ -1,0 +1,7 @@
+<p>
+  <span><i style="position: relative; top: 8px;" class="w3-round-xlarge w3-green material-icons">add</i></span>
+  <span>{{ indexObj.helpText.add }}</span>
+  <br>
+  <span><i style="position: relative; top: 8px;" class="w3-round-xlarge w3-red material-icons">remove</i></span>
+  <span>{{ indexObj.helpText.remove }}</span>
+</p>

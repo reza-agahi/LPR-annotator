@@ -3,6 +3,6 @@
   <div style="display: inline;" ng-repeat="type in typesInfo">
     <input class="w3-radio" type="radio" name="type" ng-checked="$index === 0"
       ng-model="currentPlate.type.name" ng-value="type.name">
-    <label class="w3-validate">{{ type.name }}</label>
+    <label class="w3-validate">{[{ type.name }]}</label>
   </div>
 </div>
