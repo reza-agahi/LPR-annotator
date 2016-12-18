@@ -3,7 +3,7 @@ var MongoClient = require('mongodb').MongoClient
 var objectId = require('mongodb').ObjectID;
 
 // Connection URL
-var url = 'mongodb://localhost:27017/LPR-annotator';
+var url = 'mongodb://192.168.29.85:27017/LPR-annotator';
 
 exports.insertPlate = function(plate) {
   // Use connect method to connect to the Server

@@ -4,7 +4,7 @@
 // var knex = require('knex')({
 //   client: 'mysql',
 //   connection: {
-//     host : 'localhost',
+//     host : '192.168.29.85',
 //     user : 'root',
 //     password : '1421371',
 //     database : 'LPR-annotator'
@@ -56,7 +56,7 @@ var types = [
     image: "./assets/images/samplePlate.png"
   },
   {
-    name: "نوع دو",
+    name: "خودروهای شخصی",
     image: "./assets/images/samplePlate.png"
   }
 ];
@@ -84,7 +84,7 @@ var plateObject1 = {
   type: types[0],
   difficulty: difficulties[0],
   image: "./assets/images/sampleTruePlate.jpg",
-  isChecked: false,
+  state: 'initial',
   isAnnotatable: true,
   boxes: [
     box1,
@@ -96,7 +96,7 @@ var plateObject2 = {
   type: types[1],
   difficulty: difficulties[1],
   image: "./assets/images/sampleTruePlate2.jpg",
-  isChecked: false,
+  state: 'initial',
   isAnnotatable: true,
   boxes: [
     box1,
