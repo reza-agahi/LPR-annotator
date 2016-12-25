@@ -101,17 +101,19 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             $scope.canvas.renderAll();
             $scope.stateAdd = false;
         }
-        // update dimension of selected box after resizing
-        if ($scope.stateAdd === false && $scope.canvas.getActiveObject() !== null) {
-            $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
-            var indexOfSelectedBox = $scope.indexOfActiveBox();
-            $(".plate-t1 :input")[indexOfSelectedBox].focus();
-        }
 
         // order boxes based on their x
         $scope.orderBoxes($scope.currentPlate.boxes);
         $scope.$apply();
     }
+    $("body").mouseup(function() {
+      // update dimension of selected box after resizing
+      if ($scope.stateAdd === false && $scope.canvas.getActiveObject() !== null) {
+          $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
+          var indexOfSelectedBox = $scope.indexOfActiveBox();
+          $(".plate-t1 :input")[indexOfSelectedBox].focus();
+      }
+    });
 
     $scope.boxDimensionsMultiplication = function(scaleX, scaleY) {
         for (var i = 0; i < $scope.currentPlate.boxes.length; i++) {

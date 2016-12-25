@@ -3,7 +3,7 @@ var MongoClient = require('mongodb').MongoClient
 var objectId = require('mongodb').ObjectID;
 
 // Connection URL
-var url = 'mongodb://192.168.29.85:27017/LPR-annotator';
+var url = 'mongodb://192.168.12.15:27017/LPR-annotator';
 
 exports.insertPlate = function(plate) {
   // Use connect method to connect to the Server
@@ -67,7 +67,7 @@ exports.getFirstPlate = function(query, callback) {
     console.log("Connected correctly to server");
 
     var collection = db.collection('plates');
-    collection.find(query).sort({_id:1}).toArray(function(err, docs) {
+    collection.find(query).sort({_id:1}).limit(1).toArray(function(err, docs) {
       if (docs.length === 0) {
         collection.find({state: 'annotated'}).sort({_id:1}).toArray(function(err, docs) {
           var doc = docs[0];
@@ -107,24 +107,36 @@ exports.getNextPlate = function(query, currentPlateId, callback) {
     console.log("Connected correctly to server");
 
     var collection = db.collection('plates');
-    collection.find({$or: [query, {_id: new objectId(currentPlateId)} ] }).sort({_id:1}).toArray(function(err, docs) {
-      var doc;
-      for (var i = 0; i < docs.length; i++) {
-        if (docs[i]._id == currentPlateId) {
-          doc = docs[i + 1] || docs[0];
-          break;
-        }
-      }
+    collection.find({$and: [query, {_id: {$gt: new objectId(currentPlateId)} }] })
+              .sort({_id:1}).limit(1).toArray(function(err, docs) {
+      var doc = docs[0];
+      // for (var i = 0; i < docs.length; i++) {
+      //   if (docs[i]._id == currentPlateId) {
+      //     doc = docs[i + 1] || docs[0];
+      //     break;
+      //   }
+      // }
       assert.equal(err, null);
-      console.log("Found the following record");
-      console.dir(doc);
-      collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
-        assert.equal(err, null);
-        assert.equal(1, result.result.n);
-        console.log("change document state: initial -> checking");
-        callback(doc);
-        db.close();
-      });
+      if (docs.length !== 0) { // TODO: temporary error handling! change it soon!
+        console.log("Found the following record");
+        console.dir(doc);
+        collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+          assert.equal(err, null);
+          assert.equal(1, result.result.n);
+          console.log("change document state: initial -> checking");
+          callback(doc);
+          db.close();
+        });
+      } else {
+        collection.find({'_id': new objectId(currentPlateId)}).toArray(function(err, docs) {
+          assert.equal(err, null);
+          var doc = docs[0];
+          console.log("Found the following record");
+          console.dir(doc);
+          callback(doc);
+          db.close();
+        });
+      }
     });
 
   });
@@ -137,24 +149,35 @@ exports.getPreviousPlate = function(query, currentPlateId, callback) {
     console.log("Connected correctly to server");
 
     var collection = db.collection('plates');
-    collection.find({$or: [query, {_id: new objectId(currentPlateId)} ] }).sort({_id:1}).toArray(function(err, docs) {
-      var doc;
-      for (var i = 0; i < docs.length; i++) {
-        if (docs[i]._id == currentPlateId) {
-          doc = docs[i - 1] || docs[docs.length - 1];
-          break;
-        }
-      }
+    collection.find({$and: [query, {_id: {$lt: objectId(currentPlateId)} }] }).sort({_id:-1}).limit(1).toArray(function(err, docs) {
+      var doc = docs[0];
+      // for (var i = 0; i < docs.length; i++) {
+      //   if (docs[i]._id == currentPlateId) {
+      //     doc = docs[i - 1] || docs[docs.length - 1];
+      //     break;
+      //   }
+      // }
       assert.equal(err, null);
-      console.log("Found the following record");
-      console.dir(doc);
-      collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
-        assert.equal(err, null);
-        assert.equal(1, result.result.n);
-        console.log("change document state: initial -> checking");
-        callback(doc);
-        db.close();
-      });
+      if (docs.length !== 0) { // TODO: temporary error handling! change it soon!
+        console.log("Found the following record");
+        console.dir(doc);
+        collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+          assert.equal(err, null);
+          assert.equal(1, result.result.n);
+          console.log("change document state: initial -> checking");
+          callback(doc);
+          db.close();
+        });
+      } else {
+        collection.find({'_id': new objectId(currentPlateId)}).toArray(function(err, docs) {
+          assert.equal(err, null);
+          var doc = docs[0];
+          console.log("Found the following record");
+          console.dir(doc);
+          callback(doc);
+          db.close();
+        });
+      }
     });
 
   });

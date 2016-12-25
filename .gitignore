@@ -32,3 +32,6 @@ npm-debug.log
 # other added temporary files
 startScript.sh
 doIt!
+
+# plate folder
+public/assets/plates
