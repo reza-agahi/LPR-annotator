@@ -101,19 +101,20 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             $scope.canvas.renderAll();
             $scope.stateAdd = false;
         }
+        // update dimension of selected box after resizing
+        if ($scope.stateAdd === false && $scope.canvas.getActiveObject() !== null) {
+            $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
+            var indexOfSelectedBox = $scope.indexOfActiveBox();
+            $(".plate-t1 :input")[indexOfSelectedBox].focus();
+        }
 
         // order boxes based on their x
         $scope.orderBoxes($scope.currentPlate.boxes);
         $scope.$apply();
     }
-    $("body").mouseup(function() {
-      // update dimension of selected box after resizing
-      if ($scope.stateAdd === false && $scope.canvas.getActiveObject() !== null) {
-          $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
-          var indexOfSelectedBox = $scope.indexOfActiveBox();
-          $(".plate-t1 :input")[indexOfSelectedBox].focus();
-      }
-    });
+    $("document").mouseup(function() {
+      $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
+    })
 
     $scope.boxDimensionsMultiplication = function(scaleX, scaleY) {
         for (var i = 0; i < $scope.currentPlate.boxes.length; i++) {
@@ -143,7 +144,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         } else if (e.which === 46) { // delete
             $scope.removeRect();
         }
-    };
+    }
 
 
     $scope.indexOfActiveBox = function() {
@@ -233,6 +234,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         plateState: $scope.plateState
     }).then(function success(response) {
         $scope.fetchPlate(response.data);
+        setTimeout(function(){ $scope.$apply(); }, 100);
     }, function failure(error) {
         alert("there are some problems in loading the plate data");
     });
@@ -244,6 +246,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         }).then(function success(response) {
             $scope.canvas.clear();
             $scope.fetchPlate(response.data);
+            setTimeout(function(){ $scope.$apply(); }, 100);
         }, function failure(error) {
             alert("there are some problems in loading the plate data");
         });
@@ -256,6 +259,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         }).then(function success(response) {
             $scope.canvas.clear();
             $scope.fetchPlate(response.data);
+            setTimeout(function(){ $scope.$apply(); }, 100);
         }, function failure(error) {
             alert("there are some problems in loading the plate data");
         });
