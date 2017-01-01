@@ -8,6 +8,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     $scope.plateState = 'initial';
     $scope.currentPlateScaleX = 1;
     $scope.currentPlateScaleY = 1;
+    $scope.updateIsAllowed = false;
 
     $scope.canvas = new fabric.Canvas('canvas');
 
@@ -216,6 +217,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
                 originX: 'left',
                 originY: 'top'
             });
+            $scope.updateIsAllowed = true;
         }
         img.src = $scope.currentPlate.image;
     }
@@ -240,6 +242,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     });
 
     $scope.next = function() {
+      if($scope.updateIsAllowed === true) { // just update when currentPlate is fully loaded
         $scope.updatePlate();
         getInfo.nextPlateInfo({
             plateState: $scope.plateState
@@ -250,9 +253,12 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         }, function failure(error) {
             alert("there are some problems in loading the plate data");
         });
+      }
+      $scope.updateIsAllowed = false;
     };
 
     $scope.previous = function() {
+      if($scope.updateIsAllowed === true) { // just update when currentPlate is fully loaded
         $scope.updatePlate();
         getInfo.previousPlateInfo({
             plateState: $scope.plateState
@@ -263,6 +269,8 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         }, function failure(error) {
             alert("there are some problems in loading the plate data");
         });
+      }
+      $scope.updateIsAllowed = false;
     };
 
     getInfo.typesInfo().then(function success(response) {
