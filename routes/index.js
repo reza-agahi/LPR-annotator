@@ -10,6 +10,7 @@ var updatePlateInfo = require('./updatePlateInfo');
 var typesInfo = require('./typesInfo');
 var difficultiesInfo = require('./difficultiesInfo');
 var images = require('./images');
+var numberOfAnnotatedPlates = require('./numberOfAnnotatedPlates');
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -20,6 +21,7 @@ router.use('/plateInfo', plateInfo);
 router.use('/updatePlateInfo', updatePlateInfo);
 router.use('/typesInfo', typesInfo);
 router.use('/difficultiesInfo', difficultiesInfo);
+router.use('/numberOfAnnotatedPlates', numberOfAnnotatedPlates);
 // TODO: remove these two!
 router.use('/', images);
 
@@ -32,13 +34,15 @@ var indexObj = {
     add: "ابتدا کلید Ctrl را فشرده و سپس مستطیل را ترسیم نمایید.",
     remove: "روی مستطیل مورد نظر کلیک کنید و سپس با کلید del آن را حذف نمایید."
   },
-  ignoreText: "قابل برچسب زدن نیست"
+  ignoreText: "قابل برچسب زدن نیست",
+  progressbarTitle: "درصد"
 }
 
 /* GET home page. */
 router.get('/', passport.isLoggedIn, function(req, res) {
   res.render('index', {
     indexObj: indexObj,
+    username: req.user.cn,
     partials: {
       nav: 'partials/nav.hjs',
       plateStates: 'partials/plateState.hjs',
@@ -48,7 +52,8 @@ router.get('/', passport.isLoggedIn, function(req, res) {
       radioDifficulty: 'partials/radioDifficulty.hjs',
       radioPlateType: 'partials/radioPlateType.hjs',
       checkboxAnnotatable: 'partials/checkboxAnnotatable.hjs',
-      footer: 'partials/footer.hjs'
+      footer: 'partials/footer.hjs',
+      progressbar: 'partials/progressbar.hjs'
     }
   });
 });

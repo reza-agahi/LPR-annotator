@@ -1,0 +1,8 @@
+
+<div class="w3-center">
+    <div class="counter col_fourth">
+      <i class="fa fa-edit fa-2x"></i>
+      <h2 class="timer count-title" id="count-number" data-speed="1500">{[{ numberOfAnnotatedPlates }]}</h2>
+       <p class="count-text" style="direction: rtl;">تعداد پلاک های annotate شده تا کنون</p>
+    </div>
+</div>

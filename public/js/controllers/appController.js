@@ -77,8 +77,8 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             var w = Math.abs($scope.x1 - $scope.x2);
             var h = Math.abs($scope.y1 - $scope.y2);
 
-            var y = $scope.y1 < $scope.y2 ? Math.round($scope.y1) : Math.round($scope.y2);
-            var x = $scope.x1 < $scope.x2 ? Math.round($scope.x1) : Math.round($scope.x2);
+            var y = $scope.y1 < $scope.y2 ? $scope.y1 : $scope.y2;
+            var x = $scope.x1 < $scope.x2 ? $scope.x1 : $scope.x2;
 
             var rect = new fabric.Rect({
                 top: y,
@@ -113,25 +113,25 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         $scope.orderBoxes($scope.currentPlate.boxes);
         $scope.$apply();
     }
-    $("document").mouseup(function() {
+    $("body").mouseup(function() {
       $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
-    })
+    });
 
     $scope.boxDimensionsMultiplication = function(scaleX, scaleY) {
         for (var i = 0; i < $scope.currentPlate.boxes.length; i++) {
-            $scope.currentPlate.boxes[i].x = Math.round($scope.currentPlate.boxes[i].x * scaleX);
-            $scope.currentPlate.boxes[i].y = Math.round($scope.currentPlate.boxes[i].y * scaleY);
-            $scope.currentPlate.boxes[i].w = Math.round($scope.currentPlate.boxes[i].w * scaleX);
-            $scope.currentPlate.boxes[i].h = Math.round($scope.currentPlate.boxes[i].h * scaleY);
+            $scope.currentPlate.boxes[i].x = $scope.currentPlate.boxes[i].x * scaleX;
+            $scope.currentPlate.boxes[i].y = $scope.currentPlate.boxes[i].y * scaleY;
+            $scope.currentPlate.boxes[i].w = $scope.currentPlate.boxes[i].w * scaleX;
+            $scope.currentPlate.boxes[i].h = $scope.currentPlate.boxes[i].h * scaleY;
         }
     }
 
     $scope.boxDimensionsDivision = function(scaleX, scaleY) {
         for (var i = 0; i < $scope.currentPlate.boxes.length; i++) {
-            $scope.currentPlate.boxes[i].x = Math.round($scope.currentPlate.boxes[i].x / scaleX);
-            $scope.currentPlate.boxes[i].y = Math.round($scope.currentPlate.boxes[i].y / scaleY);
-            $scope.currentPlate.boxes[i].w = Math.round($scope.currentPlate.boxes[i].w / scaleX);
-            $scope.currentPlate.boxes[i].h = Math.round($scope.currentPlate.boxes[i].h / scaleY);
+            $scope.currentPlate.boxes[i].x = $scope.currentPlate.boxes[i].x / scaleX;
+            $scope.currentPlate.boxes[i].y = $scope.currentPlate.boxes[i].y / scaleY;
+            $scope.currentPlate.boxes[i].w = $scope.currentPlate.boxes[i].w / scaleX;
+            $scope.currentPlate.boxes[i].h = $scope.currentPlate.boxes[i].h / scaleY;
         }
     }
 
@@ -222,6 +222,9 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         img.src = $scope.currentPlate.image;
     }
 
+
+
+
     $scope.updatePlate = function() {
         $scope.currentPlate.state = 'annotated';
         $scope.boxDimensionsDivision($scope.currentPlateScaleX, $scope.currentPlateScaleY);
@@ -230,7 +233,22 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         }, function failure(error) {
             alert("there are some problems in updating the plate data");
         });
+        getInfo.numberOfAnnotatedPlates().then(function success(response) {
+            $scope.numberOfAnnotatedPlates = response.data.numberOfAnnotatedPlates;
+        }, function failure(error) {
+            alert("there are some problems in updating the plate data");
+        });
     }
+
+
+    setTimeout(function(){
+      getInfo.numberOfAnnotatedPlates().then(function success(response) {
+          $scope.numberOfAnnotatedPlates = response.data.numberOfAnnotatedPlates;
+      }, function failure(error) {
+          alert("there are some problems in updating the plate data");
+      });
+      $scope.$apply();
+    }, 2000);
 
     getInfo.plateInfo({
         plateState: $scope.plateState

@@ -182,3 +182,16 @@ exports.getPreviousPlate = function(query, currentPlateId, callback) {
 
   });
 }
+
+exports.numberOfAnnotatedPlates = function(callback) {
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected correctly to server");
+
+    var collection = db.collection('plates');
+    collection.find({'state': 'annotated'}).count(function (e, count) {
+      return callback(e, count);
+    });
+
+  });
+}

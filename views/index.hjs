@@ -10,11 +10,13 @@
     <link rel="stylesheet" href="./css/3rdparty/w3.css">
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/3rdparty/gh-fork-ribbon.min.css" />
+    <link rel="stylesheet" href="./css/3rdparty/numberCounter.css" />
 
 
     <script src="./js/3rdparty/angular.min.js"></script>
     <script src="./js/3rdparty/jquery.min.js"></script>
     <script src="./js/3rdparty/fabric.js"></script>
+    <script src="./js/3rdparty/numberCounter.js"></script>
   </head>
   <body ng-app="app" ng-controller="appController" ng-Keydown="keyPress($event)">
     <a class="github-fork-ribbon left-top fixed" href="https://github.com/reza-agahi/LPR-annotator" title="Fork me on GitHub">Fork me on GitHub</a>
@@ -27,6 +29,8 @@
 
     <!-- main section of application -->
     <section style="position: relative;" class="w3-section">
+
+      {{> progressbar }}
 
       <div style="direction: rtl; width: 50%; margin: auto;">
         {{> plateStates}}

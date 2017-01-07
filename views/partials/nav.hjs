@@ -1,7 +1,7 @@
 <ul class="w3-navbar w3-teal ">
   <li title="خانه" class="w3-right">
-    <a href="#/">
-      <i class="fa fa-home" style="font-size: 24px;"></i>
+    <a>
+      <i class="fa fa-user" style="font-size: 24px;"><span class="w3-yekan w3-large">  {{ username }} </span> </i>
     </a>
   </li>
   <li title="خروج" class="w3-right">
