@@ -7,11 +7,15 @@ var bodyParser = require('body-parser');
 var passport = require('passport');
 var expressSession = require('express-session');
 var MongoStore = require('connect-mongo')(expressSession);
+var passport = require('passport');
 
 // import routes
 var index = require('./routes/index');
 var app = express();
 
+
+// app.use(passport.initialize());
+// app.use(passport.session());
 
 app.use(favicon(path.join(__dirname, 'public', 'favicon.ico')));
 app.use(logger('dev'));

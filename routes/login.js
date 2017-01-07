@@ -5,7 +5,7 @@ var passport = require('../middlewares/authentication');
 
 // handles authentication with passport
 router.post('/',
-  passport.authenticate('local',
+  passport.authenticate('ldapauth',
     {successRedirect: '/', failureRedirect: '/login'}
   )
 );

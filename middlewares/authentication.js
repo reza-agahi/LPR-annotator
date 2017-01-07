@@ -1,32 +1,24 @@
 var passport = require('passport');
-var localStrategy = require('passport-local').Strategy;
+var LdapStrategy = require('passport-ldapauth').Strategy;
 
-var users = require('../models/users.js');
-
-passport.use(new localStrategy(
-  function(username, password, done) {
-    users.findByUsername(username, function(err, user) {
-      if (err) { return done(err); }
-      if (!user) {
-        return done(null, false, { message: 'Incorrect username.' });
-      }
-      if (!users.checkPassword(username, password)) {
-        return done(null, false, { message: 'Incorrect password.' });
-      }
-      return done(null, user);
-    });
+var OPTS = {
+  server: {
+    url: 'ldap://192.168.12.10:389',
+    bindDn: 'cn=admin,dc=faraadid,dc=local',
+    bindCredentials: 'FaraP@ss4Server',
+    searchBase: "dc=faraadid,dc=local",
+    searchFilter: '(uid={{username}})'
   }
-));
+};
+
+passport.use(new LdapStrategy(OPTS));
 
 passport.serializeUser(function(user, done) {
-  done(null, user.id);
+  done(null, user);
 });
 
-passport.deserializeUser(function(id, done) {
-  users.findById(id, function (err, user) {
-    if (err) { return done(err); }
-    done(null, user);
-  });
+passport.deserializeUser(function(user, done) {
+  done(null, user);
 });
 
 passport.isLoggedIn = function(req, res, next) {
