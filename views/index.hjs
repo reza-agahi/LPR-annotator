@@ -11,12 +11,14 @@
     <link rel="stylesheet" href="./css/index.css">
     <link rel="stylesheet" href="./css/3rdparty/gh-fork-ribbon.min.css" />
     <link rel="stylesheet" href="./css/3rdparty/numberCounter.css" />
+    <link rel="stylesheet" href="./css/3rdparty/traffic-light.css" />
 
 
     <script src="./js/3rdparty/angular.min.js"></script>
     <script src="./js/3rdparty/jquery.min.js"></script>
     <script src="./js/3rdparty/fabric.js"></script>
     <script src="./js/3rdparty/numberCounter.js"></script>
+    <script src="./js/3rdparty/traffic-light.js"></script>
   </head>
   <body ng-app="app" ng-controller="appController" ng-Keydown="keyPress($event)">
     <a class="github-fork-ribbon left-top fixed" href="https://github.com/reza-agahi/LPR-annotator" title="Fork me on GitHub">Fork me on GitHub</a>
@@ -30,13 +32,23 @@
     <!-- main section of application -->
     <section style="position: relative;" class="w3-section">
 
-      {{> progressbar }}
+
+      <div class="w3-row">
+        <div class="w3-col w3-half w3-center" style="padding-left: 160px;">
+          {{> progressbar }}
+        </div>
+        <div class="w3-col w3-half w3-center" style="padding-right: 160px;">
+          {{> numberOfPlate }}
+        </div>
+      </div>
 
       <div style="direction: rtl; width: 50%; margin: auto;">
-        {{> plateStates}}
+        <!-- {{> plateStates}} -->
         {{> helpText}}
         {{> canvas}}
       </div>
+
+
 
       {{> plateT1}}
       {{> radioDifficulty}}

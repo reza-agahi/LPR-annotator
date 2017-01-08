@@ -109,12 +109,31 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             $(".plate-t1 :input")[indexOfSelectedBox].focus();
         }
 
+
         // order boxes based on their x
         $scope.orderBoxes($scope.currentPlate.boxes);
         $scope.$apply();
     }
+
+    $scope.canvas.on('after:render', function(){
+      setTimeout(function(){
+        $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
+      }, 100);
+
+    });
+
+
     $("body").mouseup(function() {
-      $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
+      // console.log($scope.canvas.getActiveObject().get('cacheWidth'), ' ', $scope.selectedBox.w);
+      // console.log($scope.canvas.getActiveObject().get('cacheHeight'), ' ', $scope.selectedBox.h);
+      // box.h = $scope.canvas.getActiveObject().get('cacheHeight');
+      // if (true) {
+      //
+      // }
+      // $scope.selectedBox = $scope.getCurrentActiveBox($scope.currentPlate.boxes);
+
+      console.log($scope.canvas.getActiveObject().get('cacheWidth'), ' ', $scope.selectedBox.w);
+      console.log($scope.canvas.getActiveObject().get('cacheHeight'), ' ', $scope.selectedBox.h);
     });
 
     $scope.boxDimensionsMultiplication = function(scaleX, scaleY) {
@@ -136,6 +155,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     }
 
     $scope.keyPress = function(e) {
+      console.log(e.which);
         if (e.which === 39) { // ->
             $scope.next();
         } else if (e.which === 37) { // <-
@@ -144,6 +164,19 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             $scope.stateAdd = true;
         } else if (e.which === 46) { // delete
             $scope.removeRect();
+        } else if (e.which === 27) { // delete All
+            $scope.removeAllRect();
+        } else if (e.which === 32) { // confirm
+          if ($scope.plateState === 'initial') {
+            $scope.plateState = 'annotated';
+            $scope.currentPlate.state = 'annotated';
+            setTimeout(function(){
+              $scope.next();
+            }, 500);
+          } else {
+            $scope.plateState = 'initial';
+            $scope.currentPlate.state = 'initial';
+          }
         }
     }
 
@@ -161,6 +194,18 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         if ($scope.canvas.getActiveObject() !== null) {
           $scope.canvas.getActiveObject().remove();
         }
+    };
+
+    $scope.removeAllRect = function() {
+      $scope.canvas.setActiveGroup(new fabric.Group($scope.canvas.getObjects())).renderAll();
+      if($scope.canvas.getActiveGroup()){
+        $scope.currentPlate.boxes = [];
+          $scope.canvas.getActiveGroup().forEachObject(function(o){
+          $scope.canvas.remove(o);
+        });
+        $scope.canvas.discardActiveGroup().renderAll();
+      }
+
     };
 
     $scope.addBoxes = function(boxes) {
@@ -222,11 +267,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         img.src = $scope.currentPlate.image;
     }
 
-
-
-
     $scope.updatePlate = function() {
-        $scope.currentPlate.state = 'annotated';
         $scope.boxDimensionsDivision($scope.currentPlateScaleX, $scope.currentPlateScaleY);
         updateInfo.plateInfo($scope.currentPlate).then(function success(response) {
             console.log(response.data);
@@ -236,7 +277,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         getInfo.numberOfAnnotatedPlates().then(function success(response) {
             $scope.numberOfAnnotatedPlates = response.data.numberOfAnnotatedPlates;
         }, function failure(error) {
-            alert("there are some problems in updating the plate data");
+            alert("there are some problems in getting the numberOfAnnotatedPlates data");
         });
     }
 
@@ -254,7 +295,15 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         plateState: $scope.plateState
     }).then(function success(response) {
         $scope.fetchPlate(response.data);
-        setTimeout(function(){ $scope.$apply(); }, 100);
+        setTimeout(function(){ $scope.$apply();}, 100);
+        setTimeout(function(){
+          getInfo.numberOfPlate().then(function success(response) {
+              $scope.numberOfPlate = response.data.numberOfPlate;
+          }, function failure(error) {
+              alert("there are some problems in getting the numberOfPlate data");
+          });
+          $scope.$apply();
+        }, 2000);
     }, function failure(error) {
         alert("there are some problems in loading the plate data");
     });
@@ -263,11 +312,19 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
       if($scope.updateIsAllowed === true) { // just update when currentPlate is fully loaded
         $scope.updatePlate();
         getInfo.nextPlateInfo({
-            plateState: $scope.plateState
+            plateState: $scope.plateState,
         }).then(function success(response) {
             $scope.canvas.clear();
             $scope.fetchPlate(response.data);
             setTimeout(function(){ $scope.$apply(); }, 100);
+            setTimeout(function(){
+              getInfo.numberOfPlate().then(function success(response) {
+                  $scope.numberOfPlate = response.data.numberOfPlate;
+              }, function failure(error) {
+                  alert("there are some problems in getting the numberOfPlate data");
+              });
+              $scope.$apply();
+            }, 100);
         }, function failure(error) {
             alert("there are some problems in loading the plate data");
         });
@@ -284,6 +341,14 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             $scope.canvas.clear();
             $scope.fetchPlate(response.data);
             setTimeout(function(){ $scope.$apply(); }, 100);
+            setTimeout(function(){
+              getInfo.numberOfPlate().then(function success(response) {
+                  $scope.numberOfPlate = response.data.numberOfPlate;
+              }, function failure(error) {
+                  alert("there are some problems in getting the numberOfPlate data");
+              });
+              $scope.$apply();
+            }, 100);
         }, function failure(error) {
             alert("there are some problems in loading the plate data");
         });

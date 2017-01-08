@@ -18,6 +18,9 @@ app.factory("getInfo", function($http) {
     },
     numberOfAnnotatedPlates: function(data) {
       return $http({method: 'post', url: '/numberOfAnnotatedPlates'});  //1. this returns promise
+    },
+    numberOfPlate: function(data) {
+      return $http({method: 'post', url: '/numberOfPlate'});
     }
 
   };

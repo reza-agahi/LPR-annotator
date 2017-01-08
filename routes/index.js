@@ -11,6 +11,7 @@ var typesInfo = require('./typesInfo');
 var difficultiesInfo = require('./difficultiesInfo');
 var images = require('./images');
 var numberOfAnnotatedPlates = require('./numberOfAnnotatedPlates');
+var numberOfPlate = require('./numberOfPlate');
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -22,6 +23,7 @@ router.use('/updatePlateInfo', updatePlateInfo);
 router.use('/typesInfo', typesInfo);
 router.use('/difficultiesInfo', difficultiesInfo);
 router.use('/numberOfAnnotatedPlates', numberOfAnnotatedPlates);
+router.use('/numberOfPlate', numberOfPlate);
 // TODO: remove these two!
 router.use('/', images);
 
@@ -53,7 +55,8 @@ router.get('/', passport.isLoggedIn, function(req, res) {
       radioPlateType: 'partials/radioPlateType.hjs',
       checkboxAnnotatable: 'partials/checkboxAnnotatable.hjs',
       footer: 'partials/footer.hjs',
-      progressbar: 'partials/progressbar.hjs'
+      progressbar: 'partials/progressbar.hjs',
+      numberOfPlate: 'partials/numberOfPlate.hjs'
     }
   });
 });
