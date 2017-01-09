@@ -5,7 +5,6 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     $scope.typesInfo = [];
     $scope.currentPlate = [];
     $scope.selectedBox = [];
-    $scope.plateState = 'initial';
     $scope.currentPlateScaleX = 1;
     $scope.currentPlateScaleY = 1;
     $scope.updateIsAllowed = false;
@@ -43,7 +42,6 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
 
     $scope.getCurrentActiveBox = function(boxes) {
         for (var i = 0; i < boxes.length; i++) {
-          // console.log(boxes[i].x, " ", boxes[i].y, $scope.canvas.getActiveObject().get('left'), " ", $scope.canvas.getActiveObject().get('top'));
             if (boxes[i].x == $scope.canvas.getActiveObject().get('left') &&
                 boxes[i].y == $scope.canvas.getActiveObject().get('top')) {
                 return boxes[i];
@@ -104,37 +102,17 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         }
         // update dimension of selected box after resizing
         if ($scope.stateAdd === false && $scope.canvas.getActiveObject() !== null) {
+            $scope.canvas.renderAll();
             $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
             var indexOfSelectedBox = $scope.indexOfActiveBox();
             $(".plate-t1 :input")[indexOfSelectedBox].focus();
         }
-
 
         // order boxes based on their x
         $scope.orderBoxes($scope.currentPlate.boxes);
         $scope.$apply();
     }
 
-    $scope.canvas.on('after:render', function(){
-      setTimeout(function(){
-        $scope.setDimensionsOfCurrentActiveBox($scope.selectedBox);
-      }, 100);
-
-    });
-
-
-    $("body").mouseup(function() {
-      // console.log($scope.canvas.getActiveObject().get('cacheWidth'), ' ', $scope.selectedBox.w);
-      // console.log($scope.canvas.getActiveObject().get('cacheHeight'), ' ', $scope.selectedBox.h);
-      // box.h = $scope.canvas.getActiveObject().get('cacheHeight');
-      // if (true) {
-      //
-      // }
-      // $scope.selectedBox = $scope.getCurrentActiveBox($scope.currentPlate.boxes);
-
-      console.log($scope.canvas.getActiveObject().get('cacheWidth'), ' ', $scope.selectedBox.w);
-      console.log($scope.canvas.getActiveObject().get('cacheHeight'), ' ', $scope.selectedBox.h);
-    });
 
     $scope.boxDimensionsMultiplication = function(scaleX, scaleY) {
         for (var i = 0; i < $scope.currentPlate.boxes.length; i++) {
@@ -155,7 +133,6 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     }
 
     $scope.keyPress = function(e) {
-      console.log(e.which);
         if (e.which === 39) { // ->
             $scope.next();
         } else if (e.which === 37) { // <-
@@ -167,15 +144,11 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         } else if (e.which === 27) { // delete All
             $scope.removeAllRect();
         } else if (e.which === 32) { // confirm
-          if ($scope.plateState === 'initial') {
-            $scope.plateState = 'annotated';
+          if ($scope.currentPlate.state === 'initial') {
             $scope.currentPlate.state = 'annotated';
             setTimeout(function(){
               $scope.next();
             }, 500);
-          } else {
-            $scope.plateState = 'initial';
-            $scope.currentPlate.state = 'initial';
           }
         }
     }
@@ -291,9 +264,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
       $scope.$apply();
     }, 2000);
 
-    getInfo.plateInfo({
-        plateState: $scope.plateState
-    }).then(function success(response) {
+    getInfo.plateInfo({}).then(function success(response) {
         $scope.fetchPlate(response.data);
         setTimeout(function(){ $scope.$apply();}, 100);
         setTimeout(function(){
@@ -311,9 +282,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     $scope.next = function() {
       if($scope.updateIsAllowed === true) { // just update when currentPlate is fully loaded
         $scope.updatePlate();
-        getInfo.nextPlateInfo({
-            plateState: $scope.plateState,
-        }).then(function success(response) {
+        getInfo.nextPlateInfo({}).then(function success(response) {
             $scope.canvas.clear();
             $scope.fetchPlate(response.data);
             setTimeout(function(){ $scope.$apply(); }, 100);
@@ -335,9 +304,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     $scope.previous = function() {
       if($scope.updateIsAllowed === true) { // just update when currentPlate is fully loaded
         $scope.updatePlate();
-        getInfo.previousPlateInfo({
-            plateState: $scope.plateState
-        }).then(function success(response) {
+        getInfo.previousPlateInfo({}).then(function success(response) {
             $scope.canvas.clear();
             $scope.fetchPlate(response.data);
             setTimeout(function(){ $scope.$apply(); }, 100);

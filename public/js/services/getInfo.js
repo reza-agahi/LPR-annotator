@@ -1,14 +1,14 @@
 app.factory("getInfo", function($http) {
 
   return {
-    plateInfo: function(justInitialPlate) {
-      return $http({method: 'post', url: '/plateInfo', data: justInitialPlate});  //1. this returns promise
+    plateInfo: function() {
+      return $http({method: 'post', url: '/plateInfo'});
     },
-    nextPlateInfo: function(justInitialPlate) {
-      return $http({method: 'post', url: '/plateInfo/next', data: justInitialPlate});
+    nextPlateInfo: function() {
+      return $http({method: 'post', url: '/plateInfo/next'});
     },
-    previousPlateInfo: function(justInitialPlate) {
-      return $http({method: 'post', url: '/plateInfo/previous', data: justInitialPlate});
+    previousPlateInfo: function() {
+      return $http({method: 'post', url: '/plateInfo/previous'});
     },
     difficultiesInfo: function() {
       return $http({method: 'post', url: '/difficultiesInfo'});
@@ -17,7 +17,7 @@ app.factory("getInfo", function($http) {
       return $http({method: 'post', url: '/typesInfo'});
     },
     numberOfAnnotatedPlates: function(data) {
-      return $http({method: 'post', url: '/numberOfAnnotatedPlates'});  //1. this returns promise
+      return $http({method: 'post', url: '/numberOfAnnotatedPlates'});
     },
     numberOfPlate: function(data) {
       return $http({method: 'post', url: '/numberOfPlate'});
