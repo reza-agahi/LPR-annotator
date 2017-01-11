@@ -1,4 +1,4 @@
-<div class="w3-section w3-center">
+<div ng-style="{'filter': currentPlate.ignore? 'blur(10px)':'blur(0px)', 'pointer-events': currentPlate.ignore? 'none':' auto'}" class="w3-section w3-center">
   <span>میزان سختی: </span>
   <div style="display: inline;" ng-repeat="difficulty in difficultiesInfo">
     <input class="w3-radio" type="radio" name="difficulty" ng-checked="$index === 0"

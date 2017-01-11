@@ -60,6 +60,46 @@ exports.updatePlate = function(query, update, callback) {
   });
 }
 
+exports.getIthPlate = function(i, callback) {
+  // Use connect method to connect to the Server
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected correctly to server");
+
+    var collection = db.collection('plates');
+    collection.find({}).sort({_id:1}).limit(Number(i)).toArray(function(err, docs) {
+      if (docs.length === 0 || i > docs.length || i < 1) {
+        collection.find({state: 'annotated'}).sort({_id:1}).toArray(function(err, docs) {
+          var doc = docs[0];
+          assert.equal(err, null);
+          console.log("Found the following record");
+          console.dir(doc);
+          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+            assert.equal(err, null);
+            assert.equal(1, result.result.n);
+            console.log("change document state: initial -> checking");
+            callback(doc);
+            db.close();
+          });
+        })
+      } else {
+        var doc = docs[i - 1];
+        assert.equal(err, null);
+        console.log("Found the following record");
+        console.dir(doc);
+        collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+          assert.equal(err, null);
+          assert.equal(1, result.result.n);
+          console.log("change document state: initial -> checking");
+          callback(doc);
+          db.close();
+        });
+      }
+    });
+
+  });
+}
+
 exports.getFirstPlate = function(query, callback) {
   // Use connect method to connect to the Server
   MongoClient.connect(url, function(err, db) {

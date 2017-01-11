@@ -137,19 +137,25 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             $scope.next();
         } else if (e.which === 37) { // <-
             $scope.previous();
-        } else if (e.which === 17) { // left ctrl
+        } else if (e.ctrlKey && e.altKey) { // left ctrl
+          alert(e.which);
             $scope.stateAdd = true;
+        } else if (e.which === 46 && e.ctrlKey) { // delete All
+          $scope.removeAllRect();
         } else if (e.which === 46) { // delete
-            $scope.removeRect();
-        } else if (e.which === 27) { // delete All
-            $scope.removeAllRect();
-        } else if (e.which === 32) { // confirm
+          $scope.removeRect();
+        } else if (e.which === 13) { // confirm
           if ($scope.currentPlate.state === 'initial') {
             $scope.currentPlate.state = 'annotated';
             setTimeout(function(){
               $scope.next();
             }, 500);
           }
+        } else if(e.which === 13) { // confirm
+          alert(e.which);
+        } else if (e.which === 71 && e.ctrlKey) {
+          var plateNumber = prompt("Please enter plateNumebr");
+          $scope.goTo(plateNumber);
         }
     }
 
@@ -269,7 +275,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         setTimeout(function(){ $scope.$apply();}, 100);
         setTimeout(function(){
           getInfo.numberOfPlate().then(function success(response) {
-              $scope.numberOfPlate = response.data.numberOfPlate;
+              $scope.numberOfPlate = response.data.numberOfPlate + 1;
           }, function failure(error) {
               alert("there are some problems in getting the numberOfPlate data");
           });
@@ -288,7 +294,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             setTimeout(function(){ $scope.$apply(); }, 100);
             setTimeout(function(){
               getInfo.numberOfPlate().then(function success(response) {
-                  $scope.numberOfPlate = response.data.numberOfPlate;
+                  $scope.numberOfPlate = response.data.numberOfPlate + 1;
               }, function failure(error) {
                   alert("there are some problems in getting the numberOfPlate data");
               });
@@ -310,7 +316,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             setTimeout(function(){ $scope.$apply(); }, 100);
             setTimeout(function(){
               getInfo.numberOfPlate().then(function success(response) {
-                  $scope.numberOfPlate = response.data.numberOfPlate;
+                  $scope.numberOfPlate = response.data.numberOfPlate + 1;
               }, function failure(error) {
                   alert("there are some problems in getting the numberOfPlate data");
               });
@@ -321,6 +327,25 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         });
       }
       $scope.updateIsAllowed = false;
+    };
+
+    $scope.goTo = function(i) {
+        $scope.updatePlate();
+        getInfo.gotoPlate(i).then(function success(response) {
+            $scope.canvas.clear();
+            $scope.fetchPlate(response.data);
+            setTimeout(function(){ $scope.$apply(); }, 100);
+            setTimeout(function(){
+              getInfo.numberOfPlate().then(function success(response) {
+                  $scope.numberOfPlate = response.data.numberOfPlate + 1;
+              }, function failure(error) {
+                  alert("there are some problems in getting the ith plate");
+              });
+              $scope.$apply();
+            }, 100);
+        }, function failure(error) {
+            alert("there are some problems in loading the plate data");
+        });
     };
 
     getInfo.typesInfo().then(function success(response) {
@@ -334,5 +359,9 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     }, function failure(error) {
         alert("there are some problems in loading the difficulties data");
     });
+
+    $scope.showHelpModal = function () {
+      document.getElementById('help-modal').style.display='block';
+    }
 
 });

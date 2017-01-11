@@ -1,4 +1,4 @@
-<div class="plate-t1 w3-section w3-row w3-center">
+<div ng-style="{'filter': currentPlate.ignore? 'blur(10px)':'blur(0px)', 'pointer-events': currentPlate.ignore? 'none':' auto'}" class="plate-t1 w3-section w3-row w3-center">
   <div class="plate-t1-background ">
     <div class="plate-t1-left-panel">
       <input ng-model="currentPlate.boxes[0].symbol" type="number" maxlength="1" name="quantity" min="0" max="9" >

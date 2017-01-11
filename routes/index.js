@@ -48,7 +48,6 @@ router.get('/', passport.isLoggedIn, function(req, res) {
     partials: {
       nav: 'partials/nav.hjs',
       plateStates: 'partials/plateState.hjs',
-      helpText: 'partials/helpText.hjs',
       canvas: 'partials/canvas.hjs',
       plateT1: 'partials/plateT1.hjs',
       radioDifficulty: 'partials/radioDifficulty.hjs',
@@ -56,7 +55,8 @@ router.get('/', passport.isLoggedIn, function(req, res) {
       checkboxAnnotatable: 'partials/checkboxAnnotatable.hjs',
       footer: 'partials/footer.hjs',
       progressbar: 'partials/progressbar.hjs',
-      numberOfPlate: 'partials/numberOfPlate.hjs'
+      numberOfPlate: 'partials/numberOfPlate.hjs',
+      helpModal: 'partials/helpModal.hjs'
     }
   });
 });

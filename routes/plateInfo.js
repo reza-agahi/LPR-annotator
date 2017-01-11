@@ -27,4 +27,12 @@ router.post('/previous', function(req, res){
   });
 });
 
+router.post('/ith', function(req, res){
+  var i = req.body.number;
+  platesModel.getIthPlate(i, function(plate) {
+    req.session.plateId = plate._id;
+    res.json(JSON.stringify(plate));
+  });
+});
+
 module.exports = router;

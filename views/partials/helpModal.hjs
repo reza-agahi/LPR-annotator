@@ -1,0 +1,20 @@
+<div id="help-modal" class="w3-modal" style="direction: rtl;">
+  <div class="w3-modal-content w3-animate-top w3-card-8">
+    <header class="w3-container w3-teal">
+      <span onclick="document.getElementById('help-modal').style.display='none'"
+      class="w3-left w3-closebtn">&times;</span>
+      <h2>راهنما</h2>
+    </header>
+    <div class="w3-container">
+      <p>
+        <span><i style="position: relative; top: 8px;" class="w3-round-xlarge w3-green material-icons">add</i></span>
+        <span>{{ indexObj.helpText.add }}</span>
+        <br>
+        <span><i style="position: relative; top: 8px;" class="w3-round-xlarge w3-red material-icons">remove</i></span>
+        <span>{{ indexObj.helpText.remove }}</span>
+      </p>
+    </div>
+    <footer class="w3-container w3-teal">
+    </footer>
+  </div>
+</div>

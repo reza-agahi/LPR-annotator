@@ -38,14 +38,12 @@
           {{> numberOfPlate }}
         </div>
       </div>
+      <br>
 
       <div style="direction: rtl; width: 50%; margin: auto;">
         <!-- {{> plateStates}} -->
-        {{> helpText}}
         {{> canvas}}
       </div>
-
-
 
       {{> plateT1}}
       {{> radioDifficulty}}
@@ -65,6 +63,9 @@
     <footer>
       {{> footer}}
     </footer>
+
+    <!-- modals  -->
+    {{> helpModal }}
 
     <!-- modules -->
     <script type="text/javascript" src="./js/app.js"></script>
