@@ -45,8 +45,8 @@ io.on('connection', function(socket){
       sessionsModel.getSession(connect_sid, function (sessionDoc) {
         var plateId = JSON.parse(sessionDoc.session).plateId;
         plateId = new objectId(plateId);
-        platesModel.updatePlate({'_id': plateId}, { $set: {state: "initial"} }, function() {
-          console.warn("disconnected client plate state is changed to initial");
+        platesModel.updatePlate({'_id': plateId}, { $set: {checking: false} }, function() {
+          console.warn("disconnected client plate checking is changed to false");
         });
       });
     }

@@ -55,7 +55,7 @@
         <i ng-click="next();" id="next" class="w3-hover-text-red w3-text-orange fa fa-arrow-circle-right"></i>
       </div>
 
-      <img ng-show="currentPlate.state=='annotated'" style="position: absolute;
+      <img ng-show="currentPlate.annotated==true" style="position: absolute;
            left:100px; top: 20px;" width="100" height="100" src="./assets/images/checked.jpg"
            alt="annotated-badge" />
     </section>

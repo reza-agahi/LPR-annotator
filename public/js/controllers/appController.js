@@ -138,21 +138,18 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         } else if (e.which === 37) { // <-
             $scope.previous();
         } else if (e.ctrlKey && e.altKey) { // left ctrl
-          alert(e.which);
             $scope.stateAdd = true;
         } else if (e.which === 46 && e.ctrlKey) { // delete All
           $scope.removeAllRect();
         } else if (e.which === 46) { // delete
           $scope.removeRect();
         } else if (e.which === 13) { // confirm
-          if ($scope.currentPlate.state === 'initial') {
-            $scope.currentPlate.state = 'annotated';
+          if ($scope.currentPlate.annotated === false) {
+            $scope.currentPlate.annotated = true;
             setTimeout(function(){
               $scope.next();
             }, 500);
           }
-        } else if(e.which === 13) { // confirm
-          alert(e.which);
         } else if (e.which === 71 && e.ctrlKey) {
           var plateNumber = prompt("Please enter plateNumebr");
           $scope.goTo(plateNumber);

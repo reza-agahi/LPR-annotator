@@ -84,7 +84,8 @@ var plateObject1 = {
   type: types[0],
   difficulty: difficulties[0],
   image: "./assets/images/sampleTruePlate.jpg",
-  state: 'initial',
+  checking: false,
+  annotated: false,
   ignore: true,
   boxes: [
     box1,
@@ -96,7 +97,8 @@ var plateObject2 = {
   type: types[1],
   difficulty: difficulties[1],
   image: "./assets/images/sampleTruePlate2.jpg",
-  state: 'initial',
+  checking: false,
+  annotated: false,
   ignore: true,
   boxes: [
     box1,

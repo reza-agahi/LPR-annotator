@@ -28,10 +28,6 @@ router.use('/numberOfPlate', numberOfPlate);
 router.use('/', images);
 
 var indexObj = {
-  plateStateLabels: {
-    initial: "راست جدید، چپ همه",
-    annotated: "فقط برچسب خورده ها"
-  },
   helpText: {
     add: "ابتدا کلید Ctrl را فشرده و سپس مستطیل را ترسیم نمایید.",
     remove: "روی مستطیل مورد نظر کلیک کنید و سپس با کلید del آن را حذف نمایید."

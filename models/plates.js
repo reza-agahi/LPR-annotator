@@ -69,15 +69,15 @@ exports.getIthPlate = function(i, callback) {
     var collection = db.collection('plates');
     collection.find({}).sort({_id:1}).limit(Number(i)).toArray(function(err, docs) {
       if (docs.length === 0 || i > docs.length || i < 1) {
-        collection.find({state: 'annotated'}).sort({_id:1}).toArray(function(err, docs) {
+        collection.find({annotated: true}).sort({_id:1}).toArray(function(err, docs) {
           var doc = docs[0];
           assert.equal(err, null);
           console.log("Found the following record");
           console.dir(doc);
-          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { checking : true } }, function(err, result) {
             assert.equal(err, null);
             assert.equal(1, result.result.n);
-            console.log("change document state: initial -> checking");
+            console.log("change document checking: false -> true");
             callback(doc);
             db.close();
           });
@@ -87,10 +87,10 @@ exports.getIthPlate = function(i, callback) {
         assert.equal(err, null);
         console.log("Found the following record");
         console.dir(doc);
-        collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+        collection.updateOne({'_id': new objectId(doc._id)}, { $set: { checking : true } }, function(err, result) {
           assert.equal(err, null);
           assert.equal(1, result.result.n);
-          console.log("change document state: initial -> checking");
+          console.log("change document checking: false -> true");
           callback(doc);
           db.close();
         });
@@ -109,15 +109,15 @@ exports.getFirstPlate = function(query, callback) {
     var collection = db.collection('plates');
     collection.find(query).sort({_id:1}).limit(1).toArray(function(err, docs) {
       if (docs.length === 0) {
-        collection.find({state: 'annotated'}).sort({_id:1}).toArray(function(err, docs) {
+        collection.find({annotated: true}).sort({_id:1}).toArray(function(err, docs) {
           var doc = docs[0];
           assert.equal(err, null);
           console.log("Found the following record");
           console.dir(doc);
-          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { checking : true } }, function(err, result) {
             assert.equal(err, null);
             assert.equal(1, result.result.n);
-            console.log("change document state: initial -> checking");
+            console.log("change document checking: false -> true");
             callback(doc);
             db.close();
           });
@@ -127,10 +127,10 @@ exports.getFirstPlate = function(query, callback) {
         assert.equal(err, null);
         console.log("Found the following record");
         console.dir(doc);
-        collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+        collection.updateOne({'_id': new objectId(doc._id)}, { $set: { checking : true } }, function(err, result) {
           assert.equal(err, null);
           assert.equal(1, result.result.n);
-          console.log("change document state: initial -> checking");
+          console.log("change document checking: false -> true");
           callback(doc);
           db.close();
         });
@@ -160,10 +160,10 @@ exports.getNextPlate = function(doUpdate, currentPlateId, callback) {
         if (docs.length !== 0 ) { // TODO: temporary error handling! change it soon!
           console.log("Found the following record");
           console.dir(doc);
-          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { checking : true } }, function(err, result) {
             assert.equal(err, null);
             assert.equal(1, result.result.n);
-            console.log("change document state: initial -> checking");
+            console.log("change document checking: false -> true");
             callback(doc);
             db.close();
           });
@@ -201,10 +201,10 @@ exports.getPreviousPlate = function(doUpdate, currentPlateId, callback) {
         if (docs.length !== 0) { // TODO: temporary error handling! change it soon!
           console.log("Found the following record");
           console.dir(doc);
-          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { state : 'checking' } }, function(err, result) {
+          collection.updateOne({'_id': new objectId(doc._id)}, { $set: { checking : true } }, function(err, result) {
             assert.equal(err, null);
             assert.equal(1, result.result.n);
-            console.log("change document state: initial -> checking");
+            console.log("change document checking: false -> true");
             callback(doc);
             db.close();
           });
@@ -230,7 +230,7 @@ exports.numberOfAnnotatedPlates = function(callback) {
     console.log("Connected correctly to server");
 
     var collection = db.collection('plates');
-    collection.find({'state': 'annotated'}).count(function (e, count) {
+    collection.find({annotated: true}).count(function (e, count) {
       return callback(e, count);
     });
 

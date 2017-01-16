@@ -1,8 +1,0 @@
-<div class="w3-center">
-  <input class="w3-radio" type="radio" name="plate-state" ng-checked="plateState === 'initial'"
-    ng-model="plateState" value="initial" >
-  <label class="w3-validate">{{ indexObj.plateStateLabels.initial }}</label>
-  <input class="w3-radio" type="radio" name="plate-state" ng-checked="plateState === 'annotated'"
-    ng-model="plateState" value="annotated" >
-  <label class="w3-validate">{{ indexObj.plateStateLabels.annotated }}</label>
-</div>

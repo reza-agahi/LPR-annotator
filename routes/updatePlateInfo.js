@@ -1,5 +1,4 @@
 var express = require('express');
-// var Q = express('q');
 var router = express.Router();
 var objectId = require('mongodb').ObjectID;
 
@@ -11,15 +10,9 @@ router.put('/', function(req, res){
   updatingPlate.annotator = req.user.cn;
   updatingPlate.lastModifiedDateTime = new Date().toLocaleString('en-US', { timeZone: 'Asia/Tehran' });
   updatingPlate._id = new objectId(updatingPlate._id);
-  if (updatingPlate.state === 'annotated') {
-    platesModel.updatePlate({'_id': updatingPlate._id}, updatingPlate, function() {
-      res.send("plate is updated successfully");
-    });
-  } else {
-    platesModel.updatePlate({'_id': updatingPlate._id}, { $set: { state : 'initial' } }, function() {
-      res.send("plate is updated successfully");
-    });
-  }
+  platesModel.updatePlate({'_id': updatingPlate._id}, updatingPlate, function() {
+    res.send("plate is updated successfully");
+  });
 
 });
 

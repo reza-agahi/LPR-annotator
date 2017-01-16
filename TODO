@@ -16,9 +16,6 @@ plate image should be responsive
 font of text input in plate-t1
 separate dev and other packages in package.json
 use npm clone for deep copy of objects, arrays, etc
-substitute mysql with mongo
-change state checking to initial after session expiration
-or on close tab change state checking
 console.logs | console.warns --> logger responsibility!
 add double checking service with a annotator field in plate and use session info to retrieve annotator's annotated plates
 if number of plates < number of parallel annotators --> server error!

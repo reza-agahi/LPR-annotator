@@ -3,7 +3,7 @@ var LdapStrategy = require('passport-ldapauth').Strategy;
 
 var OPTS = {
   server: {
-    url: 'ldap://192.168.12.10:389',
+    url: 'ldap://192.168.12.210:389',
     bindDn: 'cn=admin,dc=faraadid,dc=local',
     bindCredentials: 'FaraP@ss4Server',
     searchBase: "dc=faraadid,dc=local",

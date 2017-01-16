@@ -5,7 +5,7 @@ var platesModel = require('../models/plates.js');
 
 router.post('/', function(req, res){
   var data = req.body;
-  var query = {state: 'initial'};
+  var query = {annotated: false};
 
   platesModel.getFirstPlate(query, function(plate) {
     req.session.plateId = plate._id;
