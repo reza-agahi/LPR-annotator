@@ -6,7 +6,7 @@
   </li>
   <li title="راهنما" class="w3-right" style="cursor: pointer;">
     <a ng-click="showHelpModal()">
-      <i style="font-size: 21px;" class="material-icons">&#xe887;</i>
+      <i style="font-size: 21px; position:relative; top: 2px;" class="material-icons">&#xe887;</i>
     </a>
   </li>
   <li title="خروج" class="w3-right">

@@ -29,8 +29,11 @@ router.use('/', images);
 
 var indexObj = {
   helpText: {
-    add: "ابتدا کلید Ctrl را فشرده و سپس مستطیل را ترسیم نمایید.",
-    remove: "روی مستطیل مورد نظر کلیک کنید و سپس با کلید del آن را حذف نمایید."
+    add: "Ctrl + Alt",
+    remove: "Delete",
+    removeAll: "Ctrl + Delete",
+    goto: "Ctrl + g",
+    confirm: "Enter"
   },
   ignoreText: "قابل برچسب زدن نیست",
   progressbarTitle: "درصد"
@@ -43,7 +46,6 @@ router.get('/', passport.isLoggedIn, function(req, res) {
     username: req.user.cn,
     partials: {
       nav: 'partials/nav.hjs',
-      plateStates: 'partials/plateState.hjs',
       canvas: 'partials/canvas.hjs',
       plateT1: 'partials/plateT1.hjs',
       radioDifficulty: 'partials/radioDifficulty.hjs',
