@@ -4,10 +4,7 @@ var router = express.Router();
 var platesModel = require('../models/plates.js');
 
 router.post('/', function(req, res){
-  var data = req.body;
-  var query = {annotated: false};
-
-  platesModel.getFirstPlate(query, function(plate) {
+  platesModel.getFirstPlate(function(plate) {
     req.session.plateId = plate._id;
     res.json(JSON.stringify(plate));
   });

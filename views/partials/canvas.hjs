@@ -1,3 +1,3 @@
-<div ng-style="{'filter': currentPlate.ignore? 'blur(10px)':'blur(0px)', 'pointer-events': currentPlate.ignore? 'none':' auto'}" style="width: 600px; margin: auto;"  class="w3-center">
-  <canvas  id="canvas" width="600px" height="150px" class="w3-center"></canvas>
+<div ng-style="{'filter': currentPlate.ignore? 'blur(10px)':'blur(0px)', 'pointer-events': currentPlate.ignore? 'none':' auto'}" style="direction: rtl; margin: auto; width: 600px;"  class="w3-center">
+  <canvas  id="canvas" class="w3-center" width="600px" height="200px"></canvas>
 </div>

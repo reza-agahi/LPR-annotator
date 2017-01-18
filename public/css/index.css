@@ -7,25 +7,18 @@
   font-family: yekan; }
 
 #canvas {
-  position: absolute;
   width: 600px;
   height: 200px; }
 
 input {
   text-align: center; }
 
-.arrow-keys i {
+.arrow-keys {
   color: red;
   cursor: pointer;
   font-size: 64px;
-  position: absolute;
-  top: 230px; }
-
-.arrow-keys #next {
-  right: 150px; }
-
-.arrow-keys #previous {
-  left: 150px; }
+  position: relative;
+  top: 130px; }
 
 .plate-t1 .plate-t1-background {
   background-image: url("../assets/images/samplePlate.png");

@@ -1,4 +1,4 @@
 
     <i class="fa fa-edit fa-2x"></i>
     <h2 class="timer count-title" data-speed="1500">{[{ numberOfAnnotatedPlates }]}</h2>
-     <p class="count-text" style="direction: rtl;">تعداد پلاک های annotate شده تا کنون</p>
+    <p class="count-text" style="direction: rtl;">تعداد پلاک های annotate شده تا کنون</p>

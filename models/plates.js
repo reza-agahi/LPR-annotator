@@ -67,7 +67,8 @@ exports.getIthPlate = function(i, callback) {
     console.log("Connected correctly to server");
 
     var collection = db.collection('plates');
-    collection.find({}).sort({_id:1}).limit(Number(i)).toArray(function(err, docs) {
+    var j = Number(i) + 100; // 100 is maxNumOfCheckingPlate
+    collection.find({}).sort({_id:1}).limit(j).toArray(function(err, docs) {
       if (docs.length === 0 || i > docs.length || i < 1) {
         collection.find({annotated: true}).sort({_id:1}).toArray(function(err, docs) {
           var doc = docs[0];
@@ -83,6 +84,9 @@ exports.getIthPlate = function(i, callback) {
           });
         })
       } else {
+        while (docs[i - 1].checking === true) {
+          i++;
+        }
         var doc = docs[i - 1];
         assert.equal(err, null);
         console.log("Found the following record");
@@ -100,14 +104,14 @@ exports.getIthPlate = function(i, callback) {
   });
 }
 
-exports.getFirstPlate = function(query, callback) {
+exports.getFirstPlate = function(callback) {
   // Use connect method to connect to the Server
   MongoClient.connect(url, function(err, db) {
     assert.equal(null, err);
     console.log("Connected correctly to server");
 
     var collection = db.collection('plates');
-    collection.find(query).sort({_id:1}).limit(1).toArray(function(err, docs) {
+    collection.find({ $and: [{annotated: false}, {checking: false}] }).sort({_id:1}).limit(1).toArray(function(err, docs) {
       if (docs.length === 0) {
         collection.find({annotated: true}).sort({_id:1}).toArray(function(err, docs) {
           var doc = docs[0];
@@ -147,7 +151,7 @@ exports.getNextPlate = function(doUpdate, currentPlateId, callback) {
     console.log("Connected correctly to server");
 
     var collection = db.collection('plates');
-    collection.find({$and: [{}, {_id: {$gt: new objectId(currentPlateId)} }] })
+    collection.find({$and: [{checking: false}, {_id: {$gt: new objectId(currentPlateId)} }] })
               .sort({_id:1}).limit(1).toArray(function(err, docs) {
       var doc = docs[0];
       // for (var i = 0; i < docs.length; i++) {
@@ -189,7 +193,7 @@ exports.getPreviousPlate = function(doUpdate, currentPlateId, callback) {
     console.log("Connected correctly to server");
 
     var collection = db.collection('plates');
-    collection.find({$and: [{}, {_id: {$lt: objectId(currentPlateId)} }] }).sort({_id:-1}).limit(1).toArray(function(err, docs) {
+    collection.find({$and: [{checking: false}, {_id: {$lt: objectId(currentPlateId)} }] }).sort({_id:-1}).limit(1).toArray(function(err, docs) {
       var doc = docs[0];
       // for (var i = 0; i < docs.length; i++) {
       //   if (docs[i]._id == currentPlateId) {

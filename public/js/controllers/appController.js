@@ -137,7 +137,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             $scope.next();
         } else if (e.which === 37) { // <-
             $scope.previous();
-        } else if (e.ctrlKey && e.altKey) { // left ctrl
+        } else if (e.ctrlKey && e.altKey) { // ctrl + alt
             $scope.stateAdd = true;
         } else if (e.which === 46 && e.ctrlKey) { // delete All
           $scope.removeAllRect();
@@ -151,6 +151,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             }, 500);
           }
         } else if (e.which === 71 && e.ctrlKey) {
+          e.preventDefault();
           var plateNumber = prompt("Please enter plateNumebr");
           $scope.goTo(plateNumber);
         }
@@ -257,29 +258,34 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
         });
     }
 
-
-    setTimeout(function(){
+    angular.element(document).ready(function () {
       getInfo.numberOfAnnotatedPlates().then(function success(response) {
-          $scope.numberOfAnnotatedPlates = response.data.numberOfAnnotatedPlates;
+        $scope.numberOfAnnotatedPlates = response.data.numberOfAnnotatedPlates;
       }, function failure(error) {
-          alert("there are some problems in updating the plate data");
+        alert("there are some problems in loading the numberOfAnnotatedPlates");
+      });
+      getInfo.plateInfo({}).then(function success(response) {
+        $scope.fetchPlate(response.data);
+        getInfo.numberOfPlate().then(function success(response) {
+          $scope.numberOfPlate = response.data.numberOfPlate + 1;
+        }, function failure(error) {
+          alert("there are some problems in getting the numberOfPlate data");
+        });
+      }, function failure(error) {
+          alert("there are some problems in loading the plate data");
+      });
+      getInfo.typesInfo().then(function success(response) {
+          $scope.typesInfo = JSON.parse(response.data);
+      }, function failure(error) {
+          alert("there are some problems in loading the types data");
+      });
+
+      getInfo.difficultiesInfo().then(function success(response) {
+          $scope.difficultiesInfo = JSON.parse(response.data);
+      }, function failure(error) {
+          alert("there are some problems in loading the difficulties data");
       });
       $scope.$apply();
-    }, 2000);
-
-    getInfo.plateInfo({}).then(function success(response) {
-        $scope.fetchPlate(response.data);
-        setTimeout(function(){ $scope.$apply();}, 100);
-        setTimeout(function(){
-          getInfo.numberOfPlate().then(function success(response) {
-              $scope.numberOfPlate = response.data.numberOfPlate + 1;
-          }, function failure(error) {
-              alert("there are some problems in getting the numberOfPlate data");
-          });
-          $scope.$apply();
-        }, 2000);
-    }, function failure(error) {
-        alert("there are some problems in loading the plate data");
     });
 
     $scope.next = function() {
@@ -344,18 +350,6 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
             alert("there are some problems in loading the plate data");
         });
     };
-
-    getInfo.typesInfo().then(function success(response) {
-        $scope.typesInfo = JSON.parse(response.data);
-    }, function failure(error) {
-        alert("there are some problems in loading the types data");
-    });
-
-    getInfo.difficultiesInfo().then(function success(response) {
-        $scope.difficultiesInfo = JSON.parse(response.data);
-    }, function failure(error) {
-        alert("there are some problems in loading the difficulties data");
-    });
 
     $scope.showHelpModal = function () {
       document.getElementById('help-modal').style.display='block';

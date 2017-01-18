@@ -1,6 +1,5 @@
-
-    <div class="counter">
-      <i class="fa fa-edit fa-2x"></i>
-      <h2 class="timer count-title" data-speed="1500">{[{ numberOfPlate }]}</h2>
-       <p class="count-text" style="direction: rtl;">شماره پلاک در دیتابیس</p>
-    </div>
+<div class="counter">
+  <i class="fa fa-edit fa-2x"></i>
+  <h2 class="timer count-title">{[{ numberOfPlate }]}</h2>
+   <p class="count-text" style="direction: rtl;">شماره پلاک در دیتابیس</p>
+</div>

@@ -5,7 +5,8 @@ body {
 }
 
 #canvas {
-  position: absolute;
+  // position: absolute;
+  // width: 100%;
   width: 600px;
   height: 200px;
 }
@@ -15,20 +16,11 @@ input {
 }
 
 .arrow-keys {
-  i {
-    color: red;
-    cursor: pointer;
-    font-size: 64px;
-    position: absolute;
-    top: 230px;
-  }
-  #next {
-    right: 150px;
-  }
-
-  #previous {
-    left: 150px;
-  }
+  color: red;
+  cursor: pointer;
+  font-size: 64px;
+  position: relative;
+  top: 130px;
 }
 
 // plate templates

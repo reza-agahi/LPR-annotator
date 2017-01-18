@@ -13,9 +13,7 @@
     <link rel="stylesheet" href="./css/3rdparty/numberCounter.css" />
 
     <script src="./js/3rdparty/angular.min.js"></script>
-    <script src="./js/3rdparty/jquery.min.js"></script>
     <script src="./js/3rdparty/fabric.js"></script>
-    <script src="./js/3rdparty/numberCounter.js"></script>
   </head>
   <body ng-app="app" ng-controller="appController" ng-Keydown="keyPress($event)">
     <a class="github-fork-ribbon left-top fixed" href="https://github.com/reza-agahi/LPR-annotator" title="Fork me on GitHub">Fork me on GitHub</a>
@@ -31,34 +29,38 @@
 
 
       <div class="w3-row">
-        <div class="w3-col w3-half w3-center" style="padding-left: 160px;">
+        <div class="w3-col w3-third w3-center" style="padding-left: 160px;">
           {{> progressbar }}
         </div>
-        <div class="w3-col w3-half w3-center" style="padding-right: 160px;">
+        <div class="w3-col w3-third w3-center">
+          <span ng-show="currentPlate.annotated==true" class="w3-round w3-round-large w3-green w3-tag w3-padding w3-large">برچسب خورده</span>
+          <span ng-show="currentPlate.annotated==false" class="w3-round w3-round-large w3-red w3-tag w3-padding w3-large">برچسب نخورده</span>
+        </div>
+        <div class="w3-col w3-third w3-center" style="padding-right: 160px;">
           {{> numberOfPlate }}
         </div>
       </div>
       <br>
 
-      <div style="direction: rtl; width: 50%; margin: auto;">
-        <!-- {{> plateStates}} -->
-        {{> canvas}}
+      <div class="w3-row">
+        <div class="w3-col l2">
+          <i ng-click="previous();" class="w3-right arrow-keys w3-hover-text-red w3-text-orange fa fa-arrow-circle-left"></i>
+        </div>
+        <div class="w3-col l8">
+          {{> canvas}}
+        </div>
+        <div class="w3-col l2">
+          <i ng-click="next();" class="arrow-keys w3-hover-text-red w3-text-orange fa fa-arrow-circle-right"></i>
+        </div>
       </div>
+
+      <!-- <div class="arrow-keys">
+      </div> -->
 
       {{> plateT1}}
       {{> radioDifficulty}}
       {{> radioPlateType}}
       {{> checkboxAnnotatable}}
-
-      <div class="arrow-keys">
-        <i ng-click="previous();" id="previous" class="w3-hover-text-red w3-text-orange fa fa-arrow-circle-left"></i>
-        <i ng-click="next();" id="next" class="w3-hover-text-red w3-text-orange fa fa-arrow-circle-right"></i>
-      </div>
-
-      <span ng-show="currentPlate.annotated==true" class="w3-round w3-round-large w3-green w3-tag w3-padding w3-large"
-        style="position: absolute; left:140px; top: 20px;">برچسب خورده</span>
-      <span ng-show="currentPlate.annotated==false" class="w3-round w3-round-large w3-red w3-tag w3-padding w3-large"
-        style="position: absolute; left:140px; top: 20px;">برچسب نخورده</span>
 
     </section>
 
