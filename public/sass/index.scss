@@ -23,5 +23,11 @@ input {
   top: 130px;
 }
 
+#stat-modal {
+  td, th {
+    text-align: center;
+  }
+}
+
 // plate templates
 @import "plateT1";

@@ -8,6 +8,7 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
     $scope.currentPlateScaleX = 1;
     $scope.currentPlateScaleY = 1;
     $scope.updateIsAllowed = false;
+    $scope.stats = [];
 
     $scope.canvas = new fabric.Canvas('canvas');
 
@@ -353,6 +354,15 @@ app.controller("appController", function($scope, $window, getInfo, updateInfo) {
 
     $scope.showHelpModal = function () {
       document.getElementById('help-modal').style.display='block';
+    }
+
+    $scope.showStatModal = function () {
+      getInfo.stats().then(function success(response) {
+          $scope.stats = response.data.stats;
+      }, function failure(error) {
+          alert("there are some problems in loading the plate data");
+      });
+      document.getElementById('stat-modal').style.display='block';
     }
 
 });

@@ -253,3 +253,28 @@ exports.getNumberOfPlate = function(currentPlateId, callback) {
 
   });
 }
+
+
+
+exports.stats = function(callback) {
+  MongoClient.connect(url, function(err, db) {
+    assert.equal(null, err);
+    console.log("Connected correctly to server");
+
+    var collection = db.collection('plates');
+    var stats = [];
+    collection.distinct('annotator', function (err, annotators) {
+      for (var i = 0; i < annotators.length; i++) {
+        var annotatorStat = {};
+        if (annotators[i] !== null) {
+          annotatorStat.name = annotators[i];
+          // numberOfAnnotations
+          // annotationsPerMin
+          stats.push(annotatorStat);
+        }
+      }
+      return callback(err, stats);
+    });
+
+  });
+}

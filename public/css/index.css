@@ -20,6 +20,9 @@ input {
   position: relative;
   top: 130px; }
 
+#stat-modal td, #stat-modal th {
+  text-align: center; }
+
 .plate-t1 .plate-t1-background {
   background-image: url("../assets/images/samplePlate.png");
   position: relative;

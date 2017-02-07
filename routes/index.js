@@ -12,6 +12,7 @@ var difficultiesInfo = require('./difficultiesInfo');
 var images = require('./images');
 var numberOfAnnotatedPlates = require('./numberOfAnnotatedPlates');
 var numberOfPlate = require('./numberOfPlate');
+var stats = require('./stats');
 
 router.use(passport.initialize());
 router.use(passport.session());
@@ -24,6 +25,7 @@ router.use('/typesInfo', typesInfo);
 router.use('/difficultiesInfo', difficultiesInfo);
 router.use('/numberOfAnnotatedPlates', numberOfAnnotatedPlates);
 router.use('/numberOfPlate', numberOfPlate);
+router.use('/stats', stats);
 // TODO: remove these two!
 router.use('/', images);
 
@@ -54,7 +56,8 @@ router.get('/', passport.isLoggedIn, function(req, res) {
       footer: 'partials/footer.hjs',
       progressbar: 'partials/progressbar.hjs',
       numberOfPlate: 'partials/numberOfPlate.hjs',
-      helpModal: 'partials/helpModal.hjs'
+      helpModal: 'partials/helpModal.hjs',
+      statModal: 'partials/statModal.hjs'
     }
   });
 });

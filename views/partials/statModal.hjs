@@ -1,0 +1,27 @@
+<div id="stat-modal" class="w3-modal" style="direction: rtl; ">
+  <div class="w3-modal-content w3-animate-top w3-card-8">
+    <header class="w3-container w3-teal">
+      <span onclick="document.getElementById('stat-modal').style.display='none'"
+      class="w3-xlarge w3-left w3-closebtn">&times;</span>
+      <h2>آمار</h2>
+    </header>
+    <div class="w3-container">
+      <br>
+      <table class="w3-table-all w3-card-4">
+        <tr>
+          <th>نام</th>
+          <th>تعداد کل برچسب ها</th>
+          <th>تعداد برچسب ها در دقیقه</th>
+        </tr>
+        <tr ng-repeat="user in stats">
+          <td>{[{user.name}]}</td>
+          <td>{[{user.numberOfAnnotations}]}</td>
+          <td>{[{user.annotationsPerMin}]}</td>
+        </tr>
+      </table>
+      <br>
+    </div>
+    <footer class="w3-container w3-teal">
+    </footer>
+  </div>
+</div>

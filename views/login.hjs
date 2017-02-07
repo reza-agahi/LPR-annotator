@@ -9,7 +9,7 @@
 <body>
   <div class="wrapper">
 	<div class="container">
-		<h1>Welcome</h1>
+		<h1>Faraadid LPR Annotation Tool</h1>
 
 		<form class="form" action="/login" method="post">
 			<input type="text" placeholder="Username" name="username">

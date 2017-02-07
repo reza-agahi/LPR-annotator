@@ -24,6 +24,9 @@ app.factory("getInfo", function($http) {
     },
     gotoPlate: function(i) {
       return $http({method: 'post', url: '/plateInfo/ith', data: {number: i} });
+    },
+    stats: function() {
+      return $http({method: 'post', url: '/stats'});
     }
 
   };

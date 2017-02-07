@@ -9,6 +9,11 @@
       <i style="font-size: 21px; position:relative; top: 2px;" class="material-icons">&#xe887;</i>
     </a>
   </li>
+  <li title="آمار" class="w3-right" style="cursor: pointer;">
+    <a ng-click="showStatModal()">
+      <span style="font-size: 21px;" class="glyphicon">&#xe185;</span>
+    </a>
+  </li>
   <li title="خروج" class="w3-right">
     <a href="/logout">
       <i class="fa fa-sign-out" style="font-size: 24px;"></i>
