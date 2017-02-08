@@ -19,7 +19,7 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
 // TODO: replace input object with correct one to correctly addressing sass and css dirs
-app.use(expressSession({ secret: 'keyboard cat', store: new MongoStore({ url: 'mongodb://192.168.12.22/LPR-annotator' }),
+app.use(expressSession({ secret: 'keyboard cat', store: new MongoStore({ url: 'mongodb://192.168.12.212/LPR-annotator' }),
                          resave: false, saveUninitialized: false }));
 app.use(express.static(path.join(__dirname, 'public')));
 
